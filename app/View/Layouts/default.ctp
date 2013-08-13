@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>AppInstall</title>
+	<title>Adjuster Bridge</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -58,7 +58,7 @@
 				</button>
 				<!-- /Mobile Menu Button -->
 
-				<?php echo $this->Html->link('<i class="icon-html5"></i> AppInstall','/',array('escape'=>false,'class'=>'brand')) ?>
+				<?php echo $this->Html->link('<i class="icon-exchange"></i> Adjuster Bridge','/',array('escape'=>false,'class'=>'brand')) ?>
 
 				<div class="nav-collapse collapse pull-right">
 					<ul class="nav">

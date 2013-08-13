@@ -14,6 +14,9 @@ class User extends AppModel {
 		'LoginToken' => array(
 			'dependent' => true,
 		),
+		'Policy' => array(
+			'dependent' => true //true = delete child records on delete
+		),
 	);
 
 
