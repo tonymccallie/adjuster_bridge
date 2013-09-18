@@ -1,6 +1,114 @@
 <?php
 App::uses('AppController', 'Controller');
 class UsersController extends AppController {
+	function app_login() {
+		$message = array(
+			'status' => 'ERROR',
+			'data' => $this->request->data,
+			'message' => 'No information passed'
+		);
+		
+		if(!empty($this->request->data['User']['userID'])) {
+			$user = $this->User->find('first', array(
+				'conditions' => array(
+					'User.userID' => $this->request->data['User']['userID'],
+					'User.passwd' => Authsome::hash($this->request->data['User']['passwd'])
+				),
+				'contain' => array()
+			));
+
+			if($user) {
+				$message = array(
+					'status' => 'SUCCESS',
+					'data' => $user
+				);
+			} else {
+				$message['message'] = 'No user found with that userID and password or that userID hasn\'t been registered yet.';
+			}
+		}
+
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+	
+	function app_register() {
+		$message = array(
+			'status' => 'ERROR',
+			'request' => $this->request->data,
+			'message' => 'No information passed'
+		);
+		
+		if(!empty($this->request->data['User']['userID'])) {
+			$user = $this->User->find('first', array(
+				'conditions' => array(
+					'User.userID' => $this->request->data['User']['userID']
+				),
+				'contain' => array()
+			));
+
+			if($user) {
+				if(empty($user['User']['registered'])){
+					if(($this->request->data['User']['passwd'])&&($this->request->data['User']['passwd'] === $this->request->data['User']['passwd_verify'])) {
+						$data = array(
+							'User' => array(
+								'id' => $user['User']['id'],
+								'passwd' => $this->request->data['User']['passwd'],
+								'passwd_verify' => $this->request->data['User']['passwd_verify'],
+								'registered' =>  date('Y-m-d H:i')
+							)
+						);
+						$this->User->create();
+						if($this->User->save($data)) {
+							$message = array(
+								'status' => 'SUCCESS'
+							);
+						}
+					} else {
+						$message['message'] = 'The passwords were empty or did not match.';
+					}
+				} else {
+					$message['message'] = 'This userID has been registered.';
+				}
+					
+			} else {
+				$message['message'] = 'There was no User with that UserID found.';
+			}
+		}
+
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+	
+	function app_recover() {
+		$message = array(
+			'status' => 'ERROR',
+			'data' => $this->request->data,
+			'message' => 'No information passed'
+		);
+
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+	
+	function app_logout() {
+		$message = array(
+			'status' => 'ERROR',
+			'data' => $this->request->data,
+			'message' => 'No information passed'
+		);
+
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+
 	function login() {
 		Authsome::logout();
 		if(empty($this->request->data)) {
@@ -156,7 +264,7 @@ class UsersController extends AppController {
 	
 	
 	function dashboard() {
-		
+
 	}
 	
 	

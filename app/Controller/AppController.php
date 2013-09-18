@@ -7,6 +7,7 @@ class AppController extends Controller {
 	public $components = array(
 		'Authsome' => array('model' => 'User'),
 		'Session','Email','Cookie',
+		'RequestHandler'
 	);
 	
 	public $user = array();

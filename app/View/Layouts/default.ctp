@@ -67,6 +67,7 @@
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="admin_dropdown">Admin <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><?php echo $this->Html->link('Users','/admin/users') ?></li>
+								<li><?php echo $this->Html->link('Claims','/claims') ?></li>
 							</ul>
 						</li>
 						<?php endif ?>

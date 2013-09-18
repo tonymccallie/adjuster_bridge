@@ -1,6 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
-class Policy extends AppModel {
+class Claim extends AppModel {
 	public $belongsTo = array(
 		'User',
 	);
