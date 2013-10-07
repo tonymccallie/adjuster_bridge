@@ -113,7 +113,7 @@ class ClaimsController extends AppController {
 			'ACID' => '33152',
 			'companyKey' => 'ORI',
 			'LoginCode' => 'FRARECRAC7AF8E76AVAC',
-			'startDate' => date('Y-m-d\TH:i:s',strtotime('-2 month')),
+			'startDate' => date('Y-m-d\TH:i:s',strtotime('-2 hour')),
 			'endDate' => date('Y-m-d\TH:i:s'),
 			'searchFilter' => ''
 		);
