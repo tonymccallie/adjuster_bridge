@@ -19,6 +19,7 @@
 				<th>
 					<?php echo $this->Paginator->sort('city','<i class="icon-sort"></i> City',array('escape'=>false)); ?>
 				</th>
+				<th>Links</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +28,14 @@
 				<td><?php echo $this->Html->link($claim['Claim']['claimFileID'],array('action'=>'edit',$claim['Claim']['id'])) ?></td>
 				<td><?php echo $claim['Claim']['address1'] ?></td>
 				<td><?php echo $claim['Claim']['city'] ?></td>
+				<td>
+					<div class="btn-group">
+						<?php
+							echo $this->Html->link('Preliminary','/ajax/claims/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
+							echo $this->Html->link('Preliminary PDF','/ajax/claims/builder/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
+						?>	
+					</div>
+				</td>
 			</tr>
 		<?php endforeach ?>
 		</tbody>

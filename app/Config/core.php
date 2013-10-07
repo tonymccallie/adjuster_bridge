@@ -121,7 +121,7 @@
  *	`manager_index()` and `/manager/controller/index`
  *
  */
-	Configure::write('Routing.prefixes', array('admin','app'));
+	Configure::write('Routing.prefixes', array('admin','app','ajax'));
 
 /**
  * Turn off all caching application-wide.

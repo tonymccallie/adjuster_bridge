@@ -8,10 +8,10 @@ class UsersController extends AppController {
 			'message' => 'No information passed'
 		);
 		
-		if(!empty($this->request->data['User']['userID'])) {
+		if(!empty($this->request->data['User']['username'])) {
 			$user = $this->User->find('first', array(
 				'conditions' => array(
-					'User.userID' => $this->request->data['User']['userID'],
+					'User.username' => $this->request->data['User']['username'],
 					'User.passwd' => Authsome::hash($this->request->data['User']['passwd'])
 				),
 				'contain' => array()
@@ -23,7 +23,7 @@ class UsersController extends AppController {
 					'data' => $user
 				);
 			} else {
-				$message['message'] = 'No user found with that userID and password or that userID hasn\'t been registered yet.';
+				$message['message'] = 'No user found with that username and password or that userID hasn\'t been registered yet.';
 			}
 		}
 
@@ -40,10 +40,10 @@ class UsersController extends AppController {
 			'message' => 'No information passed'
 		);
 		
-		if(!empty($this->request->data['User']['userID'])) {
+		if(!empty($this->request->data['User']['username'])) {
 			$user = $this->User->find('first', array(
 				'conditions' => array(
-					'User.userID' => $this->request->data['User']['userID']
+					'User.username' => $this->request->data['User']['username']
 				),
 				'contain' => array()
 			));
@@ -69,11 +69,11 @@ class UsersController extends AppController {
 						$message['message'] = 'The passwords were empty or did not match.';
 					}
 				} else {
-					$message['message'] = 'This userID has been registered.';
+					$message['message'] = 'This username has been registered.';
 				}
 					
 			} else {
-				$message['message'] = 'There was no User with that UserID found.';
+				$message['message'] = 'There was no User with that username found.';
 			}
 		}
 
