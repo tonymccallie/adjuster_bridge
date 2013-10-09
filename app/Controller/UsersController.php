@@ -48,32 +48,39 @@ class UsersController extends AppController {
 				'contain' => array()
 			));
 
-			if($user) {
-				if(empty($user['User']['registered'])){
-					if(($this->request->data['User']['passwd'])&&($this->request->data['User']['passwd'] === $this->request->data['User']['passwd_verify'])) {
-						$data = array(
-							'User' => array(
-								'id' => $user['User']['id'],
-								'passwd' => $this->request->data['User']['passwd'],
-								'passwd_verify' => $this->request->data['User']['passwd_verify'],
-								'registered' =>  date('Y-m-d H:i')
-							)
+			$alreadyRegistered = false;
+
+			if(($this->request->data['User']['passwd'])&&($this->request->data['User']['passwd'] === $this->request->data['User']['passwd_verify'])) {
+				$data = array(
+					'User' => array(
+						'username' => $this->request->data['User']['username'],
+						'passwd' => $this->request->data['User']['passwd'],
+						'passwd_verify' => $this->request->data['User']['passwd_verify'],
+						'registered' =>  date('Y-m-d H:i'),
+						'role_id' => 2
+					)
+				);
+				
+				if($user) {
+					if(!empty($user['User']['registered'])) {
+						$alreadyRegistered = false;
+					}
+					$data['User']['id'] = $user['User']['id'];
+				}
+				
+				if(!$alreadyRegistered) {
+					$this->User->create();
+					if($this->User->save($data)) {
+						$message = array(
+							'status' => 'SUCCESS'
 						);
-						$this->User->create();
-						if($this->User->save($data)) {
-							$message = array(
-								'status' => 'SUCCESS'
-							);
-						}
-					} else {
-						$message['message'] = 'The passwords were empty or did not match.';
 					}
 				} else {
-					$message['message'] = 'This username has been registered.';
+					$message['message'] = 'This username has previously been registered.';
 				}
-					
+				
 			} else {
-				$message['message'] = 'There was no User with that username found.';
+				$message['message'] = 'The passwords were empty or did not match.';
 			}
 		}
 

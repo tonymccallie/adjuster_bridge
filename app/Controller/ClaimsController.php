@@ -132,7 +132,7 @@ class ClaimsController extends AppController {
 				}
 				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
 					$user = $this->Claim->User->lookup(array(
-						'userID' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userID']
+						'username' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin']
 					));
 					if(empty($claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'])) {
 						$claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'] = "UNASSIGNED";
