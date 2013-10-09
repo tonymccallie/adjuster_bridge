@@ -117,63 +117,75 @@ class ClaimsController extends AppController {
 			'endDate' => date('Y-m-d\TH:i:s'),
 			'searchFilter' => ''
 		);
+
 		$claimsfile = $HttpSocket->post('https://filetrac.onlinereportinginc.com/FileTracAPI/FileTracAPI.asmx/FileTracAPI_GetClaims', $data);
 		if($claimsfile->isOk()) {
 			$response = Xml::toArray(Xml::build($claimsfile->body()));
-			$claimsInfo = Xml::toArray(Xml::build($response['string']));
-			foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
-				$user = $this->Claim->User->lookup(array(
-					'userID' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userID']
-				));
-				if(empty($claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'])) {
-					$claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'] = "UNASSIGNED";
-					$claim['USER_PACKET'][0]['PrimaryAdjuster']['userEMail'] = "unassigned@advancedadjusting.com";
-					$claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin'] = "UNASSIGNED";
-				}
-				
-				$claim_id = $this->Claim->find('first',array(
-					'conditions' => array(
-						'Claim.claimID' => $claim['claimID']
-					),
-					'contain' => array()
-				));
-				
-				if(!$claim_id) {
-					$data = array(
-						'Claim' => array(
-							'claimID' => $claim['claimID'],
-							'claimFileID' => $claim['claimFileID'],
-							'entered' => date('Y-m-d H:i:s',strtotime($claim['claimDateEntered'])),
-							'due' => date('Y-m-d H:i:s',strtotime($claim['claimDateDue'])),
-							'type' => $claim['lossType'],
-							'unit' => $claim['lossUnit'],
-							'address1' => $claim['lossAddr1'],
-							'address2' => $claim['lossAddr2'],
-							'city' => $claim['lossCity'],
-							'state' => $claim['lossState'],
-							'zip' => $claim['lossZIP'],
-							'phone' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactPhone3'],
-							'policy_number' => $claim['CLAIM_CONTACTS']['Contact'][0]['policyNum'],
-							'first_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactFName'],
-							'last_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactLName'],
-							'user_id' => $user,
-							'json' => json_encode($claim)
-						),
-						'User' => array(
-							'id' => $user,
-							'role_id' => 2,
-							'first_name' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'],
-							'last_name' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterLName'],
-							'email' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userEMail'],
-							'username' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin'],
-						)
+			$claimsXml = file_get_contents($response['string']);
+
+			try {
+				$claimsInfo = Xml::toArray(Xml::build($response['string']));				
+				if(!empty($claimsInfo['CLAIMS_PACKET']['claim']['claimID'])) {
+					$claimsInfo['CLAIMS_PACKET']['claim'] = array(
+						$claimsInfo['CLAIMS_PACKET']['claim']
 					);
-					$newClaims++;
-					$this->Claim->create();
-					if(!$this->Claim->saveAll($data)) {
-						debug($data);
+				}
+				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
+					$user = $this->Claim->User->lookup(array(
+						'userID' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userID']
+					));
+					if(empty($claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'])) {
+						$claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'] = "UNASSIGNED";
+						$claim['USER_PACKET'][0]['PrimaryAdjuster']['userEMail'] = "unassigned@advancedadjusting.com";
+						$claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin'] = "UNASSIGNED";
+					}
+					
+					$claim_id = $this->Claim->find('first',array(
+						'conditions' => array(
+							'Claim.claimID' => $claim['claimID']
+						),
+						'contain' => array()
+					));
+					
+					if(!$claim_id) {
+						$data = array(
+							'Claim' => array(
+								'claimID' => $claim['claimID'],
+								'claimFileID' => $claim['claimFileID'],
+								'entered' => date('Y-m-d H:i:s',strtotime($claim['claimDateEntered'])),
+								'due' => date('Y-m-d H:i:s',strtotime($claim['claimDateDue'])),
+								'type' => $claim['lossType'],
+								'unit' => $claim['lossUnit'],
+								'address1' => $claim['lossAddr1'],
+								'address2' => $claim['lossAddr2'],
+								'city' => $claim['lossCity'],
+								'state' => $claim['lossState'],
+								'zip' => $claim['lossZIP'],
+								'phone' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactPhone3'],
+								'policy_number' => $claim['CLAIM_CONTACTS']['Contact'][0]['policyNum'],
+								'first_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactFName'],
+								'last_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactLName'],
+								'user_id' => $user,
+								'json' => json_encode($claim)
+							),
+							'User' => array(
+								'id' => $user,
+								'role_id' => 2,
+								'first_name' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'],
+								'last_name' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterLName'],
+								'email' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userEMail'],
+								'username' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin'],
+							)
+						);
+						$newClaims++;
+						$this->Claim->create();
+						if(!$this->Claim->saveAll($data)) {
+							debug($data);
+						}
 					}
 				}
+			} catch(XmlException $e) {
+				
 			}
 		}
 		$this->set(compact('newClaims'));
