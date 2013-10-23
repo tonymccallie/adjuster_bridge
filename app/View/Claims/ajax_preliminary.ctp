@@ -1,3 +1,8 @@
+<?php
+	$unmarked = '[&nbsp;&nbsp;]';
+	$marked = '[<b>X</b>]';
+	$json = json_decode($claim['Claim']['json'],true);
+?>
 <style type="text/css" media="screen">
 <!--
 	body {
@@ -26,7 +31,7 @@
 <page backtop="14mm">
 	<table class="page">
 		<tr>
-			<td style="width: 15%;">&nbsp;</td>
+			<td style="width: 15%;">&nbsp;&nbsp;&nbsp;</td>
 			<td class="centered" style="width: 60%">
 				<h5>Department of Homeland Security</h5>
 				<h5>Federal Emergency Management Agency</h5>
@@ -55,7 +60,7 @@
 				Policy Number:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'] ?>
+				<?php echo $claim['Claim']['policy_number'] ?>
 			</td>
 		</tr>
 		<tr>
@@ -63,13 +68,13 @@
 				Property Address:
 			</td>
 			<td style="width: 40%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+				<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>, <?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
 			</td>
 			<td style="width: 15%; font-weight: bold;">
 				Date of Loss:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'] ?>
+				<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
 			</td>
 		</tr>
 		<tr>
@@ -77,13 +82,13 @@
 				Mailing Address:
 			</td>
 			<td style="width: 40%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+				<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>, <?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
 			</td>
 			<td style="width: 15%; font-weight: bold;">
 				Catastrophe No.:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'] ?>
+				<?php echo $json['claimCAT'] ?>
 			</td>
 		</tr>
 		<tr>
@@ -91,13 +96,13 @@
 				Insured Phone No.:
 			</td>
 			<td style="width: 40%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+				<?php echo $claim['Claim']['phone'] ?>
 			</td>
 			<td style="width: 15%; font-weight: bold;">
 				Adj. File No.:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'] ?>
+				<?php echo $claim['Claim']['claimFileID'] ?>
 			</td>
 		</tr>
 		<tr>
@@ -111,7 +116,7 @@
 				Tax ID No.
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['last_name'] ?>
+				&nbsp;
 			</td>
 		</tr>
 		<tr>
@@ -132,69 +137,71 @@
 	<table class="page">
 		<tr>
 			<td style="width: 33%">
-				<b>Date Loss Assigned:</b> date
+				<b>Date Loss Assigned:</b> <?php echo date('m/d/Y',strtotime($claim['Claim']['date_loss_assigned'])) ?>
 			</td>
 			<td style="width: 33%">
-				<b>Date Insured Contacted</b> date
+				<b>Date Insured Contacted</b> <?php echo date('m/d/Y',strtotime($claim['Claim']['date_contacted'])) ?>
 			</td>
 			<td style="width: 33%">
-				<b>Date Loss Inspected:</b> date
+				<b>Date Loss Inspected:</b> <?php echo date('m/d/Y',strtotime($claim['Claim']['date_inspected'])) ?>
 			</td>
 		</tr>
 	</table>
 	<table border="1" cellspacing="0" class="page" style="width: 100%">
 		<tr>
 			<td style="width: 2%" class="centered">E<br>N<br>C</td>
-			<td style="width: 96%; padding-left: 2%;">
+			<td style="width: 98%;">
 				<table>
 					<tr>
-						<td style="width: 25%;">[&nbsp;&nbsp;] Building Worksheets ()</td>
-						<td style="width: 25%;">[X] Photographs ()</td>
-						<td style="width: 25%;">[&nbsp;&nbsp;] Proof of Loss ()</td>
-						<td style="width: 25%;">[&nbsp;&nbsp;] Other_______________</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> Building Worksheets ()</td>
+						<td style="width: 25%;"><?php echo $marked ?> Photographs ()</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> Proof of Loss ()</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> Other_______________</td>
 					</tr>
 					<tr>
-						<td style="width: 25%;">[&nbsp;&nbsp;] Contents Worksheets ()</td>
-						<td style="width: 25%;">[&nbsp;&nbsp;] Narratives ()</td>
-						<td style="width: 25%;">[&nbsp;&nbsp;] R/C Proof ()</td>
-						<td style="width: 25%;">[&nbsp;&nbsp;] Other_______________</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> Contents Worksheets ()</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> Narratives ()</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> R/C Proof ()</td>
+						<td style="width: 25%;"><?php echo $unmarked ?> Other_______________</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
 			<td style="width: 2%" class="centered">I<br>N<br>S<br>U<br>R<br>A<br>N<br>C<br>E</td>
-			<td style="width: 96%; padding-left: 2%;">
+			<td style="width: 98%;">
 				<table>
 					<tr>
-						<td style="width: 60%;">
+						<td style="width: 55%;">
 							<table>
 								<tr>
 									<td>Coverage verified from:</td>
-									<td>[&nbsp;&nbsp;] NFIP</td>
-									<td>[&nbsp;&nbsp;] Agent's Daily</td>
-									<td>[&nbsp;&nbsp;] Insured's Policy</td>
-									<td>&nbsp;</td>
+									<?php foreach(array("NFIP","Agent's Daily","Insured's Policy") as $option): ?>
+										<td><?php echo ($claim['Claim']['verify_source'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+									<td>&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td colspan="5">
-										Term: _______ to _______
+										Term: <span style="text-decoration: underline;"> <?php echo date('m/d/Y',strtotime($json['CLAIM_CONTACTS']['Contact'][0]['policyStart'])) ?> </span> to <span style="text-decoration: underline;"> <?php echo date('m/d/Y',strtotime($json['CLAIM_CONTACTS']['Contact'][0]['policyEnd'])) ?> </span>
 									</td>
 								</tr>
 							</table>
 						</td>
-						<td style="width: 40%;">
+						<td style="width: 45%;">
 							<table>
 								<tr>
 									<td>Program:</td>
-									<td>[&nbsp;&nbsp;] Emergency</td>
-									<td colspan="2">[&nbsp;&nbsp;] Regular</td>
+									<?php foreach(array("Emergency","Regular") as $option): ?>
+										<td><?php echo ($claim['Claim']['policy_type'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+									<td>&nbsp;</td>
 								</tr>
 								<tr>
 									<td>Form:</td>
-									<td>[&nbsp;&nbsp;] Dwelling</td>
-									<td>[&nbsp;&nbsp;] Gen Property</td>
-									<td>[&nbsp;&nbsp;] RCBAP</td>
+									<?php foreach(array("Dwelling","General Property","RCBAP") as $option): ?>
+										<td><?php echo ($claim['Claim']['form'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
 								</tr>
 							</table>
 						</td>
@@ -202,9 +209,9 @@
 				</table>
 				<table>
 					<tr>
-						<td rowspan="3" style="width: 5%;">&nbsp;</td>
+						<td rowspan="3" style="width: 5%;">&nbsp;&nbsp;&nbsp;</td>
 						<td rowspan="3" style="width: 15%;"><div style="border: solid 1px black; padding: 5px; width: 70px;">Reserves:</div></td>
-						<td style="width: 15%">&nbsp;</td>
+						<td style="width: 15%">&nbsp;&nbsp;&nbsp;</td>
 						<td style="width: 20%">Coverage</td>
 						<td style="width: 20%">Deductible</td>
 						<td style="width: 20%">Reserve</td>
@@ -213,13 +220,13 @@
 						<td>Building</td>
 						<td style="border-bottom: solid 1px black;"></td>
 						<td style="border-bottom: solid 1px black;"></td>
-						<td style="border-bottom: solid 1px black;"></td>
+						<td style="border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['building_reserve'],2,'.',',') ?></td>
 					</tr>
 					<tr>
 						<td>Contents</td>
 						<td style="border-bottom: solid 1px black;"></td>
 						<td style="border-bottom: solid 1px black;"></td>
-						<td style="border-bottom: solid 1px black;"></td>
+						<td style="border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['content_reserve'],2,'.',',') ?></td>
 					</tr>
 				</table>
 				<table>
@@ -228,8 +235,8 @@
 							<table>
 								<tr>
 									<td>Advanced Payment Requested?</td>
-									<td>[&nbsp;&nbsp;] No</td>
-									<td>[&nbsp;&nbsp;] Yes</td>
+									<td><?php echo (!$claim['Claim']['adv_payment'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['adv_payment'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
 								</tr>
 							</table>
 						</td>
@@ -237,9 +244,9 @@
 							<table>
 								<tr>
 									<td style="width: 25%; text-align: right;">Building:</td>
-									<td style="width: 25%; border-bottom: solid 1px black;"></td>
+									<td style="width: 25%; border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['building_advance'],2,'.',',') ?></td>
 									<td style="width: 25%; text-align: right;">Contents:</td>
-									<td style="width: 25%; border-bottom: solid 1px black;"></td>
+									<td style="width: 25%; border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['content_advance'],2,'.',',') ?></td>
 								</tr>
 							</table>
 						</td>
@@ -249,81 +256,367 @@
 		</tr>
 		<tr>
 			<td style="width: 2%" class="centered">R<br>I<br>S<br>K</td>
-			<td style="width: 96%; padding-left: 2%;">
-				<table style="border-bottom: solid 1px black;">
+			<td style="width: 98%;">
+				<table cellspacing="0">
 					<tr>
-						<td style="width: 10%;" rowspan="2">Type of Building:</td>
-						<td style="width: 15%;">[&nbsp;&nbsp;] Single Family</td>
-						<td style="width: 15%;">[&nbsp;&nbsp;] 2-4 Family</td>
-						<td style="width: 15%;">[&nbsp;&nbsp;] Condo Assn.</td>
-						<td style="width: 15%;">[&nbsp;&nbsp;] Condo Unit</td>
-						<td style="width: 15%;">[&nbsp;&nbsp;] Other Residential</td>
-						<td style="width: 15%;">[&nbsp;&nbsp;] Non-residential</td>
-					</tr>
-					<tr>
-						<td style="width: 15%;">[&nbsp;&nbsp;] Mobile Home:</td>
-						<td style="width: 75%;" colspan="5">
+						<td colspan="2" style="width: 100%; border-bottom: solid 1px black;">
 							<table>
 								<tr>
-									<td style="width: 10%; text-align: right;">Make: </td>
-									<td style="width: 20%; border-bottom: solid 1px black;"></td>
-									<td style="width: 10%; text-align: right;">Model: </td>
-									<td style="width: 20%; border-bottom: solid 1px black;"></td>
-									<td style="width: 10%; text-align: right;">Serial No: </td>
-									<td style="width: 30%; border-bottom: solid 1px black;"></td>
+									<td style="width: 10%;" rowspan="2">Type of Building:</td>
+									<?php foreach(array("Single Family","2-4 Family","Condo Association","Condo unit","Other Residentail","Non-Residential") as $option): ?>
+										<td style="width: 15%;"><?php echo ($claim['Claim']['building_type'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+								<tr>
+									<td style="width: 15%;"><?php echo ($claim['Claim']['building_type'] == 'Mobile Home/Travel Trailer')?$marked:$unmarked ?> Mobile Home:&nbsp;&nbsp;</td>
+									<td style="width: 75%;" colspan="5">
+										<table>
+											<tr>
+												<td style="width: 10%; text-align: right;">Make: </td>
+												<td style="width: 20%; border-bottom: solid 1px black;"><?php echo $claim['Claim']['building_make'] ?></td>
+												<td style="width: 10%; text-align: right;">Model: </td>
+												<td style="width: 20%; border-bottom: solid 1px black;"><?php echo $claim['Claim']['building_model'] ?></td>
+												<td style="width: 10%; text-align: right;">Serial No: </td>
+												<td style="width: 30%; border-bottom: solid 1px black;"><?php echo $claim['Claim']['building_serial'] ?></td>
+											</tr>
+										</table>
+									</td>
 								</tr>
 							</table>
 						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Occupancy</td>
+						<td colspan="2" style="width: 100%; border-bottom: solid 1px black;">
+							<table>
+								<tr>
+									<td>Occupancy</td>
+									<?php foreach(array("Owner","Tenant","State/Government Owned","Unoccupied") as $option): ?>
+										<td><?php echo ($claim['Claim']['occupancy'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+									<td>&nbsp;&nbsp;&nbsp;</td>
+									<td>Residency</td>
+									<?php foreach(array("Princpal","Seasonal") as $option): ?>
+										<td><?php echo ($claim['Claim']['residency'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>Title verified?</td>
+									<td><?php echo ($claim['Claim']['title_verified'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
+									<td><?php echo (!$claim['Claim']['title_verified'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+									<td>Source of verification:</td>
+									<td><span style="text-decoration: underline;"> <?php echo $claim['Claim']['title_verify_source'] ?> </span></td>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Floors</td>
+						<td colspan="2" style="width: 100%; border-bottom: solid 1px black;">
+							<table>
+								<tr>
+									<td>Number of floors in building including basement:</td>
+									<?php foreach(array("1","2","3 or more") as $option): ?>
+										<td><?php echo ($claim['Claim']['number_of_floors'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+									<td>&nbsp;&nbsp;&nbsp;</td>
+									<td>Is building a split level?</td>
+									<td><?php echo ($claim['Claim']['split_level'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
+									<td><?php echo (!$claim['Claim']['split_level'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+							<table style="">
+								<tr>
+									<td>In case of multiple occupancy, indicate floor(s) occupied by insured:</td>
+									<td><?php echo ($claim['Claim']['multiple_occupancy_basement'])?$marked:$unmarked ?> Basement&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['multiple_occupancy_first'])?$marked:$unmarked ?> First&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['multiple_occupancy_above'])?$marked:$unmarked ?> Second and/or above&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Risk</td>
+						<td colspan="2" style="width: 100%; border-bottom: solid 1px black;">
+							<table>
+								<tr>
+									<td>Type of basement?</td>
+									<?php foreach(array("None","Unfinished","Finished") as $option): ?>
+										<td><?php echo ($claim['Claim']['type_of_basement'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+									<td>&nbsp;&nbsp;&nbsp;</td>
+									<td>Is the basement floodproofed?</td>
+									<td><?php echo ($claim['Claim']['basement_floodproofed'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
+									<td><?php echo (!$claim['Claim']['basement_floodproofed'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+							<table style="">
+								<tr>
+									<td>Building elevated?</td>
+									<td><?php echo (!$claim['Claim']['building_elevated'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['building_elevated'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
+									<td>Foundation area enclosure?</td>
+									<?php foreach(array("None","Breakaway Walls","Unfinished","Finished") as $option): ?>
+										<td><?php echo ($claim['Claim']['foundation_area_enclosure'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Foundation</td>
+						<td style="width: 55%; border-bottom: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>Is risk under construction?</td>
+									<?php foreach(array("No","New Building","Improvement in progress") as $option): ?>
+										<td><?php echo ($claim['Claim']['risk_under_construction'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
+						<td rowspan="2" style="width: 45%; border-bottom: solid 1px black; border-left: solid 1px black;">
+							<table style="">
+								<tr>
+									<td colspan="5">Prior condition of:</td>
+								</tr>
+								<tr>
+									<td>Building:</td>
+									<?php foreach(array("Poor","Fair","Good","Very Good") as $option): ?>
+										<td><?php echo ($claim['Claim']['prior_conditions'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+								<tr>
+									<td>Contents:</td>
+									<?php foreach(array("Poor","Fair","Good","Very Good") as $option): ?>
+										<td><?php echo ($claim['Claim']['prior_content_conditions'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Exterior</td>
+						<td style="border-bottom: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>FIRM Date</td>
+									<td><?php echo date('m/d/Y',strtotime($claim['Claim']['firm_data'])) ?></td>
+									<?php foreach(array("Pre FIRM","Post FIRM") as $option): ?>
+										<td><?php echo ($claim['Claim']['pre_post_firm'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Contents</td>
+						<td colspan="2" style="width: 100%; border-bottom: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>Piles:</td>
+									<?php foreach(array("Concrete","Wood","Steel","Wood Post","Concrete Slab","Other") as $option): ?>
+										<?php if($option != 'Other'): ?>
+											<td><?php echo ($claim['Claim']['piles'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+										<?php else: ?>
+											<td><?php echo ($claim['Claim']['piles'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;<span style="border-bottom:solid 1px black;">&nbsp;&nbsp;<?php echo $claim['Claim']['piles_other'] ?>&nbsp;&nbsp;</span></td>
+										<?php endif ?>
+									<?php endforeach ?>
+								</tr>
+								<tr>
+									<td>Piers:</td>
+									<?php foreach(array("Reinf. concrete","Reinf. block","Unreinf. block","Brick","Other") as $option): ?>
+										<?php if($option != 'Other'): ?>
+											<td><?php echo ($claim['Claim']['piers'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+										<?php else: ?>
+											<td colspan="2"><?php echo ($claim['Claim']['piers'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;<span style="border-bottom:solid 1px black;">&nbsp;&nbsp;<?php echo $claim['Claim']['piers_other'] ?>&nbsp;&nbsp;</span></td>
+										<?php endif ?>
+									<?php endforeach ?>
+								</tr>
+								<tr>
+									<td>Walls:</td>
+									<?php foreach(array("Reinf. concrete","Block","Reinf. concrete shear","Treated plywood","Brick","Other") as $option): ?>
+										<?php if($option != 'Other'): ?>
+											<td><?php echo ($claim['Claim']['walls'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+										<?php else: ?>
+											<td><?php echo ($claim['Claim']['walls'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;<span style="border-bottom:solid 1px black;">&nbsp;&nbsp;<?php echo $claim['Claim']['walls_other'] ?>&nbsp;&nbsp;</span></td>
+										<?php endif ?>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Nearest</td>
+						<td style="width: 55%; border-bottom: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>Exterior wall structure:</td>
+									<?php foreach(array("Reinf. concrete","Concrete block","Wood stud") as $option): ?>
+										<td><?php echo ($claim['Claim']['exterior_wall_structure'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+								<tr>
+									<?php foreach(array("Steel & glass","Brick or stone","Other") as $option): ?>
+										<?php if($option != 'Other'): ?>
+											<td><?php echo ($claim['Claim']['exterior_wall_structure'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+										<?php else: ?>
+											<td colspan="2"><?php echo ($claim['Claim']['exterior_wall_structure'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;<span style="border-bottom:solid 1px black;">&nbsp;&nbsp;<?php echo $claim['Claim']['exterior_wall_other'] ?>&nbsp;&nbsp;</span></td>
+										<?php endif ?>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
+						<td style="width: 45%; border-bottom: solid 1px black; border-left: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>Exterior wall surface treatment:</td>
+									<?php foreach(array("Unfinished","Stone/brick veneer") as $option): ?>
+										<td><?php echo ($claim['Claim']['exterior_wall_treatment'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+							<table style="">
+								<tr>
+									<?php foreach(array("Stucco","Wood siding","Metal sheathing/siding") as $option): ?>
+										<td><?php echo ($claim['Claim']['exterior_wall_treatment'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+							<table style="">
+								<tr>
+									<?php foreach(array("Vinyl sheathing/siding","Other") as $option): ?>
+										<?php if($option != 'Other'): ?>
+											<td><?php echo ($claim['Claim']['exterior_wall_treatment'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+										<?php else: ?>
+											<td><?php echo ($claim['Claim']['exterior_wall_treatment'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;<span style="border-bottom:solid 1px black;">&nbsp;&nbsp;<?php echo $claim['Claim']['exterior_treatment_other'] ?>&nbsp;&nbsp;</span></td>
+										<?php endif ?>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="width: 100%; border-bottom: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>Contents are:</td>
+									<?php foreach(array("Household","Other than household") as $option): ?>
+										<td><?php echo ($claim['Claim']['contents'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+									<td>&nbsp;&nbsp;&nbsp;</td>
+									<td>Contents located in:</td>
+									<td><?php echo ($claim['Claim']['contents_basement'])?$marked:$unmarked ?> Basement&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['contents_first'])?$marked:$unmarked ?> First Floor&nbsp;&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="4">&nbsp;&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['contents_first_plus'])?$marked:$unmarked ?> Basement and first floor&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['contents_second_plus'])?$marked:$unmarked ?> First floor and above&nbsp;&nbsp;</td>
+									<td><?php echo ($claim['Claim']['contents_other_check'])?$marked:$unmarked ?> Second floor and above&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 55%;">
+							<table style="">
+								<tr>
+									<td>Nearest body of water:</td>
+									<td><?php echo $claim['Claim']['nearest_water'] ?></td>
+								</tr>
+							</table>
+						</td>
+						<td style="width: 45%; border-left: solid 1px black;">
+							<table style="">
+								<tr>
+									<td>Distance from risk:</td>
+									<td><?php echo $claim['Claim']['distance_from_risk'] ?></td>
+								</tr>
+							</table>
+						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
 			<td style="width: 2%" class="centered">O<br>R<br>I<br>G<br>I<br>N</td>
-			<td style="width: 96%; padding-left: 2%;">
-				<table style="border-bottom: solid 1px black;">
+			<td style="width: 98%;">
+				<table cellspacing="0">
 					<tr>
-						<td>Flooding</td>
+						<td colspan="2" style="border-bottom: solid 1px black;">
+							<table>
+								<tr>
+									<td>Was there a general and temporary condition of flooding:</td>
+									<?php foreach(array("No: explain fully under remarks","Yes: Indicate cause of loss") as $option): ?>
+										<td><?php echo ($claim['Claim']['temporary_condition'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>Cause of Loss:</td>
+									<?php foreach(array("Tidal water overflow","Stream, river, or lake overflow","Alluvial fan overflow","Accumulation of rainfall or snowmelt") as $k => $option): ?>
+										<td><?php echo ($claim['Claim']['cause_of_loss'] == $option)?$marked:$unmarked ?> <?php echo ($k+1).'. '.$option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>Flood Characteristics:</td>
+									<?php foreach(array("Velocity flow","Low velocity flow or ponding","Wave action","Mudflow","Erosion") as $k => $option): ?>
+										<td><?php echo ($claim['Claim']['flood_characteristics'] == $option)?$marked:$unmarked ?> <?php echo ($k+1).'. '.$option ?>&nbsp;&nbsp;</td>
+									<?php endforeach ?>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>Was flood associated with failure of a dam, storm drain system, pump(s), other flood control measure, etc.?</td>
+									<td><?php echo ($claim['Claim']['associated_with_failure'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
+									<td><?php echo (!$claim['Claim']['associated_with_failure'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>Did other than natural cause contribute to flooding?</td>
+									<td><?php echo ($claim['Claim']['other_than_natural'])?$marked:$unmarked ?> Yes&nbsp;&nbsp;</td>
+									<td><?php echo (!$claim['Claim']['other_than_natural'])?$marked:$unmarked ?> No&nbsp;&nbsp;</td>
+									<td>If "yes" to either question, complete "Cause of Loss and Subrogation Report"</td>
+								</tr>
+							</table>
+						</td>
 					</tr>
-				</table>
-				<table style="border-bottom: solid 1px black;">
 					<tr>
-						<td>Date/time</td>
+						<td style="width: 55%;">
+							<table>
+								<tr>
+									<td>Date/time water entered building</td>
+									<td><span style="text-decoration: underline;"> <?php echo date('m/d/Y',strtotime($claim['Claim']['date_water_entered'])).' '.$claim['Claim']['time_water_entered'] ?> </span></td>
+								</tr>
+								<tr>
+									<td>Date/time water receded from building</td>
+									<td><span style="text-decoration: underline;"> <?php echo date('m/d/Y',strtotime($claim['Claim']['date_water_receded'])).' '.$claim['Claim']['time_water_receded'] ?> </span></td>
+								</tr>
+								<tr>
+									<td>Length of time water remained in building</td>
+									<td><span style="text-decoration: underline;"> <?php echo $claim['Claim']['time_water'] ?> </span></td>
+								</tr>
+							</table>
+						</td>
+						<td style="width: 45%; border-left: solid 1px black;">
+							<table>
+								<tr>
+									<td>Water Height or Wave Action:</td>
+									<td>Exterior</td>
+									<td>Interior</td>
+								</tr>
+								<tr>
+									<td>Main Building/Condo Assn.:</td>
+									<td><span style="text-decoration: underline;"> <?php echo $claim['Claim']['ext_water_ft'].'ft. '.$claim['Claim']['ext_water_in'].'in.' ?> </span></td>
+									<td><span style="text-decoration: underline;"> <?php echo $claim['Claim']['water_feet'].'ft. '.$claim['Claim']['water_inches'].'in.' ?> </span></td>
+								</tr>
+								<tr>
+									<td>Apt. Building/Condo Unit:</td>
+									<td><span style="text-decoration: underline;"> <?php echo $claim['Claim']['ext_apt_water_ft'].'ft. '.$claim['Claim']['ext_apt_water_in'].'in.' ?> </span></td>
+									<td><span style="text-decoration: underline;"> <?php echo $claim['Claim']['apt_water_feet'].'ft. '.$claim['Claim']['apt_water_inches'].'in.' ?> </span></td>
+								</tr>
+							</table>
+						</td>
 					</tr>
 				</table>
 			</td>
@@ -332,11 +625,11 @@
 	<table class="page">
 		<tr>
 			<td style="width: 10%;"></td>
-			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;">DATE</td>
+			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
 			<td style="width: 10%;"></td>
-			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;">SIGNATURE</td>
+			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?></td>
 			<td style="width: 10%;"></td>
-			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;">DATE</td>
+			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['fc_num'] ?></td>
 			<td style="width: 10%;"></td>
 		</tr>
 		<tr>
@@ -350,19 +643,763 @@
 		</tr>
 	</table>
 </page>
+<?php if((!empty($claim['Claim']['pic_front_left']))||(!empty($claim['Claim']['pic_front_right']))): ?>
 <page backtop="14mm">
 	<table border="1" cellspacing="0" class="page" style="width: 100%">
 		<tr>
-			<td>Header information</td>
+			<td>
+				<table class="page" style="width: 100%">
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Insured:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Report:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Location:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Loss:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Policy Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Company
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Advanced Adjusting, Inc.
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Claim Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							203 SW 8th Ave, LB 14045
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Our File Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['claimFileID'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Amarillo, TX 79101
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Adjuster Name:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+						</td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 	</table>
-	Pictures
+	<table class="page">
+		<?php if(!empty($claim['Claim']['pic_front_left'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_left'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td>Left Front</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+		<?php if(!empty($claim['Claim']['pic_front_right'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_right'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td>Right Front</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+	</table>
 </page>
+<?php endif ?>
+<?php if((!empty($claim['Claim']['pic_rear_left']))||(!empty($claim['Claim']['pic_rear_right']))): ?>
 <page backtop="14mm">
 	<table border="1" cellspacing="0" class="page" style="width: 100%">
 		<tr>
-			<td>Header information</td>
+			<td>
+				<table class="page" style="width: 100%">
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Insured:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Report:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Location:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Loss:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Policy Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Company
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Advanced Adjusting, Inc.
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Claim Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							203 SW 8th Ave, LB 14045
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Our File Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['claimFileID'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Amarillo, TX 79101
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Adjuster Name:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+						</td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 	</table>
-	Pictures
+	<table class="page">
+		<?php if(!empty($claim['Claim']['pic_rear_left'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_left'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td>Left Rear</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+		<?php if(!empty($claim['Claim']['pic_rear_right'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_right'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td>Right Rear</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+	</table>
 </page>
+<?php endif ?>
+<?php if((!empty($claim['Claim']['pic_water_inside']))||(!empty($claim['Claim']['pic_water_outside']))): ?>
+<page backtop="14mm">
+	<table border="1" cellspacing="0" class="page" style="width: 100%">
+		<tr>
+			<td>
+				<table class="page" style="width: 100%">
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Insured:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Report:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Location:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Loss:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Policy Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Company
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Advanced Adjusting, Inc.
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Claim Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							203 SW 8th Ave, LB 14045
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Our File Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['claimFileID'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Amarillo, TX 79101
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Adjuster Name:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="page">
+		<?php if(!empty($claim['Claim']['pic_water_inside'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_inside'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>5</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td>Water Inside</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+		<?php if(!empty($claim['Claim']['pic_water_outside'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_outside'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>6</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td>Water Outside</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+	</table>
+</page>
+<?php endif ?>
+<?php if((!empty($claim['Claim']['pic_optional1']))||(!empty($claim['Claim']['pic_optional2']))): ?>
+<page backtop="14mm">
+	<table border="1" cellspacing="0" class="page" style="width: 100%">
+		<tr>
+			<td>
+				<table class="page" style="width: 100%">
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Insured:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Report:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Location:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Loss:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Policy Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Company
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Advanced Adjusting, Inc.
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Claim Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							203 SW 8th Ave, LB 14045
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Our File Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['claimFileID'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Amarillo, TX 79101
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Adjuster Name:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="page">
+		<?php if(!empty($claim['Claim']['pic_optional1'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional1'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>7</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td><?php echo $claim['Claim']['pic_optional1_notes'] ?></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+		<?php if(!empty($claim['Claim']['pic_optional2'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional2'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>8</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td><?php echo $claim['Claim']['pic_optional2_notes'] ?></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+	</table>
+</page>
+<?php endif ?>
+<?php if((!empty($claim['Claim']['pic_optional3']))||(!empty($claim['Claim']['pic_optional4']))): ?>
+<page backtop="14mm">
+	<table border="1" cellspacing="0" class="page" style="width: 100%">
+		<tr>
+			<td>
+				<table class="page" style="width: 100%">
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Insured:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Report:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Location:
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Date of Loss:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Policy Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							Company
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Advanced Adjusting, Inc.
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Claim Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['policy_number'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							203 SW 8th Ave, LB 14045
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Our File Number:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['Claim']['claimFileID'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 15%; font-weight: bold;">
+							&nbsp;
+						</td>
+						<td style="width: 40%; border-bottom: solid 1px black;">
+							Amarillo, TX 79101
+						</td>
+						<td style="width: 15%; font-weight: bold;">
+							Adjuster Name:
+						</td>
+						<td style="width: 30%; border-bottom: solid 1px black;">
+							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="page">
+		<?php if(!empty($claim['Claim']['pic_optional3'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional3'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>9</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td><?php echo $claim['Claim']['pic_optional3_notes'] ?></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+		<?php if(!empty($claim['Claim']['pic_optional4'])): ?>
+		<tr>
+			<td>
+				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional4'] ?>">
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>Photo #:</td>
+						<td>10</td>
+					</tr>
+					<tr>
+						<td>Date</td>
+						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+					</tr>
+					<tr>
+						<td>Taken By:</td>
+						<td>Adjuster</td>
+					</tr>
+					<tr>
+						<td>Comment:</td>
+						<td><?php echo $claim['Claim']['pic_optional4_notes'] ?></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<?php endif ?>
+	</table>
+</page>
+<?php endif ?>

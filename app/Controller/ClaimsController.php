@@ -67,15 +67,15 @@ class ClaimsController extends AppController {
 		
 		$this->Claim->create();
 		
-		if(!empty($data['upload_preliminary'])) {
+		if(!empty($json['upload_preliminary'])) {
 			$data['Claim']['preliminary_uploaded'] = date('Y-m-d H:i:s');
 		}
 		
-		if(!empty($data['upload_advanced'])) {
+		if(!empty($json['upload_advanced'])) {
 			$data['Claim']['advanced_uploaded'] = date('Y-m-d H:i:s');
 		}
 		
-		if(!empty($data['upload_engineer'])) {
+		if(!empty($json['upload_engineer'])) {
 			$data['Claim']['engineer_uploaded'] = date('Y-m-d H:i:s');
 		}
 		
@@ -152,6 +152,7 @@ class ClaimsController extends AppController {
 							'Claim' => array(
 								'claimID' => $claim['claimID'],
 								'claimFileID' => $claim['claimFileID'],
+								'lossDate' => $claim['lossDate'],
 								'entered' => date('Y-m-d H:i:s',strtotime($claim['claimDateEntered'])),
 								'due' => date('Y-m-d H:i:s',strtotime($claim['claimDateDue'])),
 								'type' => $claim['lossType'],
@@ -231,13 +232,16 @@ class ClaimsController extends AppController {
 	}
 
 	public function ajax_builder($report = '', $id = null) {
+		$this->layout = "ajax";
 		$url = Common::currentUrl().'ajax/claims/'.$report.'/'.$id;
 		App::import('Vendor','HTML2PDF',array('file'=>'html2pdf/html2pdf.class.php'));
 		$html2pdf = new HTML2PDF('P','LETTER','en');
 		$content = file_get_contents($url);
 		$html2pdf->pdf->SetDisplayMode('real');
 		$html2pdf->writeHTML($content);
-		$html2pdf->Output('preliminary.pdf');
+		$filename = $id.'_'.$report.'.pdf';
+		$html2pdf->Output(APP . 'webroot/reports/'.$filename,'F');
+		$this->set(compact('filename'));
 	}
 
 	public function ajax_preliminary($claim_id = null) {
@@ -245,6 +249,14 @@ class ClaimsController extends AppController {
 		$this->layout = "print";
 		$claim = $this->Claim->findByid($claim_id);
 		$this->set(compact('claim'));
+	}
+	
+	public function ajax_upload_latest() {
+		$preliminaries = $this->Claim->find('all',array(
+			'conditions' => array(
+				'Claim.' => ''
+			)
+		));
 	}
 
 	public function admin_delete($id = null) {
