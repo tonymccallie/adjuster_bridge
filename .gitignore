@@ -9,6 +9,7 @@
 /dist
 /tags
 /app/webroot/uploads
+/app/webroot/reports
 
 # OS generated files #
 ######################
