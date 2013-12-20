@@ -1,4 +1,43 @@
 <?php
+class Report {
+	public $Login = 'mikemorgan';
+	public $Password = 'rincon1$';
+	public $CompanyKey = 'ORI';
+    public $ReportFile = '';
+    public $UserID = '';
+    public $ClaimID = '';
+    public $ClaimFileID = '';
+    public $ReportFileName = '';
+    public $ReportTitle = 'Preliminary Report';
+    public $ReportDescription = '';
+    public $PrintedFlag = 1;
+    public function __construct($file) {
+    	$this->ReportFile = $file;
+    	$this->UserID = '205079';
+    	$this->ClaimID = '3303793';
+    	$this->ClaimFileID = '27326';
+	    $this->ReportFileName = '110_preliminary.pdf';
+    	$this->ReportTitle = 'Preliminary Report';
+    	$this->ReportDescription = 'Preliminary Report uploaded from the AdvAdj App. on '.date('m/d/Y');
+    }  
+	
+    /*
+function oReport($claim, $file, $filename) {
+    	$file = base64_encode(file_get_contents('http://localhost/adjuster_bridge/reports/110_preliminary.pdf'));
+    	$this->Login = 'mikemorgan';
+    	$this->Password = 'rincon1$';
+    	$this->CompanyKey = 'ORI';
+    	$this->ReportFile = $file;
+    	$this->UserID = $claim['User']['userID'];
+    	$this->ClaimID = $claim['Claim']['claimFileID'];
+    	$this->claimFileID = $claim['Claim']['claimFileID'];
+    	$this->ReportFileName = $filename;
+    	$this->ReportTitle = 'Preliminary Report';
+    	$this->ReportDescription = 'Preliminary Report uploaded from the AdvAdj App. on '.date('m/d/Y');
+    }
+*/
+}
+
 App::uses('AppController', 'Controller');
 class ClaimsController extends AppController {
 	function app_list() {
@@ -209,6 +248,48 @@ class ClaimsController extends AppController {
 		$claims = $this->paginate();
 		$this->set(compact('claims'));
 	}
+	
+	public function admin_test() {
+		$soap = new SoapClient("http://ftservices.onlinereportinginc.com/service.asmx?WSDL",array(
+			'trace'=>1,'soap_version' => SOAP_1_2,
+			'classmap'=> array(
+				'UploadReport' => 'UploadReport'
+			)
+		));
+		
+		$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/110');
+		$data = new SoapVar($xml,XSD_ANYXML);
+
+		/*
+$data = array(
+			'oReport' => array(
+				'Login' => 'mikemorgan',
+				'Password' => 'rincon1$',
+				'CompanyKey' => 'ORI',
+				'ReportFile' => $file,
+				'UserID' => '205079',
+				'ClaimID' => '3303793',
+				'ClaimFileID' => '27326',
+				'ReportFileName' => '110_preliminary.pdf',
+				'ReportTitle' => 'Preliminary',
+				'ReportDescription' => 'Preliminary Report uploaded from the AdvAdj App. on '.date('m/d/Y'),
+				'PrintedFlag' => 1
+			)
+		);
+*/
+		
+		/*
+$data = array(
+			'Report' => new Report($file)
+		);
+*/
+
+		
+		$result = $soap->UploadReport($data);
+		debug($result);
+		debug($soap->__getLastRequestHeaders());
+		die($soap->__getLastRequest());
+	}
 
 	public function admin_edit($id = null) {
 		if (!$this->Claim->exists($id)) {
@@ -240,8 +321,10 @@ class ClaimsController extends AppController {
 		$html2pdf->pdf->SetDisplayMode('real');
 		$html2pdf->writeHTML($content);
 		$filename = $id.'_'.$report.'.pdf';
-		$html2pdf->Output(APP . 'webroot/reports/'.$filename,'F');
-		$this->set(compact('filename'));
+		//$file = $html2pdf->Output(APP . 'webroot/reports/'.$filename,'F'); //'F' to write file
+		$file = base64_encode($html2pdf->Output('','S')); //stream file
+		$claim = $this->Claim->findById($id);
+		$this->set(compact('filename','file','claim'));
 	}
 
 	public function ajax_preliminary($claim_id = null) {
@@ -252,11 +335,51 @@ class ClaimsController extends AppController {
 	}
 	
 	public function ajax_upload_latest() {
+		$this->layout = "ajax";
 		$preliminaries = $this->Claim->find('all',array(
 			'conditions' => array(
-				'Claim.' => ''
+				'Claim.preliminary_uploaded NOT' => null
 			)
 		));
+		
+		$prelim_files = array();
+		
+		$soap = new SoapClient("http://ftservices.onlinereportinginc.com/service.asmx?WSDL",array(
+			'trace'=>1,'soap_version' => SOAP_1_2,
+			'classmap'=> array(
+				'UploadReport' => 'UploadReport'
+			)
+		));
+		
+		
+		foreach($preliminaries as $preliminary) {
+			$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/'.$preliminary['Claim']['id']);			
+			$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/110');
+			$data = new SoapVar($xml,XSD_ANYXML);
+			$result = $soap->UploadReport($data);
+			if(!empty($result->UploadReportResult)) {
+				$filetrac = $result->UploadReportResult;
+				Common::email(array(
+					'to' => 'tony@threeleaf.net',
+					'subject' => 'New Preliminary Report Uploaded',
+					'template' => 'preliminary',
+					'variables' => array(
+						'url' => 'https://filetrac.onlinereportinginc.com/system/reportView.asp?reportID='.$filetrac,
+						'claim' => $preliminary
+					)
+				),'');
+				$data = array(
+					'Claim' => array(
+						'id' => $preliminary['Claim']['id'],
+						'preliminary_uploaded' => null
+					)
+				);
+				$this->Claim->create();
+				$this->Claim->save($data);
+			}
+		}
+		
+		echo date('Y-m-d H:i:s')." - ".count($preliminaries)." preliminaries uploaded\n";
 	}
 
 	public function admin_delete($id = null) {

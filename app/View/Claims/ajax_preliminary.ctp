@@ -218,13 +218,13 @@
 					</tr>
 					<tr>
 						<td>Building</td>
-						<td style="border-bottom: solid 1px black;"></td>
+						<td style="border-bottom: solid 1px black;">$<?php echo !empty($json['claimCoverageA'])?number_format($json['claimCoverageA'],2,'.',','):0 ?></td>
 						<td style="border-bottom: solid 1px black;"></td>
 						<td style="border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['building_reserve'],2,'.',',') ?></td>
 					</tr>
 					<tr>
 						<td>Contents</td>
-						<td style="border-bottom: solid 1px black;"></td>
+						<td style="border-bottom: solid 1px black;">$<?php echo !empty($json['claimCoverageA'])?number_format($json['claimCoverageC'],2,'.',','):0 ?></td>
 						<td style="border-bottom: solid 1px black;"></td>
 						<td style="border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['content_reserve'],2,'.',',') ?></td>
 					</tr>
