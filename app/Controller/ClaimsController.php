@@ -360,7 +360,7 @@ $data = array(
 			if(!empty($result->UploadReportResult)) {
 				$filetrac = $result->UploadReportResult;
 				Common::email(array(
-					'to' => 'tony@threeleaf.net',
+					'to' => 'mikemorgan@advadj.com',
 					'subject' => 'New Preliminary Report Uploaded',
 					'template' => 'preliminary',
 					'variables' => array(
