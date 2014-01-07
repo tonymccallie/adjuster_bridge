@@ -354,7 +354,6 @@ $data = array(
 		
 		foreach($preliminaries as $preliminary) {
 			$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/'.$preliminary['Claim']['id']);			
-			$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/110');
 			$data = new SoapVar($xml,XSD_ANYXML);
 			$result = $soap->UploadReport($data);
 			if(!empty($result->UploadReportResult)) {
