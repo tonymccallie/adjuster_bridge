@@ -325,7 +325,8 @@ $data = array(
 		$content = file_get_contents($url);
 		$html2pdf->pdf->SetDisplayMode('real');
 		$html2pdf->writeHTML($content);
-		$filename = $id.'_'.$report.'.pdf';
+		$claim = $this->Claim->findById($id);
+		$filename = $claim['Claim']['claimFileID'].'_'.$report.'.pdf';
 		//$file = $html2pdf->Output(APP . 'webroot/reports/'.$filename,'F'); //'F' to write file
 		$file =$html2pdf->Output($filename); //stream file
 	}
