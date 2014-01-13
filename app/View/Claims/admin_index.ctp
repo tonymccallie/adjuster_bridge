@@ -7,6 +7,7 @@
 	</h3>
 </div>
 <div class="">
+	<?php echo $this->element('search') ?>
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
@@ -32,7 +33,7 @@
 					<div class="btn-group">
 						<?php
 							echo $this->Html->link('Preliminary','/ajax/claims/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
-							echo $this->Html->link('Preliminary PDF','/ajax/claims/builder/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
+							echo $this->Html->link('Preliminary PDF','/ajax/claims/pdf/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
 						?>	
 					</div>
 				</td>

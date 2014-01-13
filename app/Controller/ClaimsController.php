@@ -245,6 +245,15 @@ class ClaimsController extends AppController {
 	}
 	
 	public function admin_index() {
+		$paginate = array(
+			'conditions' => array()
+		);
+		
+		if(!empty($this->request->data['Claim']['search'])) {
+			$paginate['conditions']['Claim.claimFileID'] = $this->request->data['Claim']['search'];
+		}
+		
+		$this->paginate = $paginate;
 		$claims = $this->paginate();
 		$this->set(compact('claims'));
 	}
@@ -308,8 +317,17 @@ $data = array(
 		}
 	}
 	
-	public function admin_pdf($claim_id = null) {
-		$this->set(compact('claim_id'));
+	public function ajax_pdf($report = '', $id = null) {
+		$this->layout = "ajax";
+		$url = Common::currentUrl().'ajax/claims/'.$report.'/'.$id;
+		App::import('Vendor','HTML2PDF',array('file'=>'html2pdf/html2pdf.class.php'));
+		$html2pdf = new HTML2PDF('P','LETTER','en');
+		$content = file_get_contents($url);
+		$html2pdf->pdf->SetDisplayMode('real');
+		$html2pdf->writeHTML($content);
+		$filename = $id.'_'.$report.'.pdf';
+		//$file = $html2pdf->Output(APP . 'webroot/reports/'.$filename,'F'); //'F' to write file
+		$file =$html2pdf->Output($filename); //stream file
 	}
 
 	public function ajax_builder($report = '', $id = null) {
