@@ -50,7 +50,8 @@ class ClaimsController extends AppController {
 		if(!empty($this->request->data['User']['id'])) {
 			$claims = $this->Claim->find('all',array(
 				'conditions' => array(
-					'Claim.user_id' => $this->request->data['User']['id']
+					'Claim.user_id' => $this->request->data['User']['id'],
+					'status' => 'NEW'
 				),
 				'contain' => array()
 			));	
@@ -58,6 +59,17 @@ class ClaimsController extends AppController {
 				'status' => 'SUCCESS',
 				'data' => $claims
 			);
+		}
+		
+		if($claims) {
+			$read = array();
+			foreach($claims as $claim) {
+				array_push($read, array(
+					'id' => $claim['Claim']['id'],
+					'status' => 'READ'
+				));
+			}
+			$this->Claim->saveMany($read);
 		}
 
 		$this->set(array(
