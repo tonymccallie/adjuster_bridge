@@ -103,6 +103,36 @@ class UsersController extends AppController {
 		));
 	}
 	
+	function app_save() {
+		$message = array(
+			'status' => 'ERROR',
+			'data' => $this->request->data,
+			'message' => 'No information passed'
+		);
+		
+		if(!empty($this->request->data['User']['id'])) {
+			if($this->User->save($this->request->data)) {
+				$user = $this->User->find('first',array(
+					'conditions' => array(
+						'User.id' => $this->request->data['User']['id']
+					),
+					'contain' => array()
+				));
+				$message = array(
+					'status' => 'SUCCESS',
+					'data' => $user
+				);
+			} else {
+				$message['message'] = 'There was an error saving the User';
+			}
+		}
+
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+	
 	function app_logout() {
 		$message = array(
 			'status' => 'ERROR',

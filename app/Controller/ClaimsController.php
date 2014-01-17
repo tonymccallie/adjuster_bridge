@@ -51,7 +51,7 @@ class ClaimsController extends AppController {
 			$claims = $this->Claim->find('all',array(
 				'conditions' => array(
 					'Claim.user_id' => $this->request->data['User']['id'],
-					'status' => 'NEW'
+					'status NOT' => 'CLOSED'
 				),
 				'contain' => array()
 			));	
@@ -139,6 +139,30 @@ class ClaimsController extends AppController {
 			$message['message'] = 'There was an error saving the data';
 		}
 		
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+	
+	function app_close($id = null) {
+		$message = array(
+			'status' => 'ERROR',
+			'data' => $this->request->data,
+			'message' => 'No information passed'
+		);
+
+		if(!empty($this->request->data['Claim']['id'])) {
+			if($this->Claim->save($this->request->data)) {
+				$message = array(
+					'status' => 'SUCCESS',
+					'data' => $this->request->data
+				);
+			} else {
+				$message['message'] = 'There was an error closing the Claim';
+			}
+		}
+
 		$this->set(array(
 			'message' => $message,
 			'_serialize' => 'message'
