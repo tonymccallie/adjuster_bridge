@@ -141,6 +141,39 @@ class ClaimsController extends AppController {
 			'_serialize' => array('claims')
 		));
 	}
+	
+	function ajax_assign() {
+		Configure::write('debug', 2);
+		$this->layout = "ajax";
+		$unassigned = $this->Claim->User->lookup(array('User.username'=>'UNASSIGNED'));
+		$claims = $this->Claim->find('all',array(
+			'conditions' => array(
+				'Claim.user_id' => $unassigned
+			)
+		));
+		
+		$soap = new SoapClient("http://ftservices.onlinereportinginc.com/service.asmx?WSDL",array(
+			'trace'=>1,'soap_version' => SOAP_1_2,
+			'classmap'=> array(
+				'GetClaimData' => 'GetClaimData'
+			)
+		));
+		
+		$xml = '<GetClaimData xmlns="http://filetrac.onlinereportinginc.com/ftservices/">'.
+					'<oParms>'.
+						'<Login>mikemorgan</Login>'.
+						'<Password>rincon1$</Password>'.
+						'<CompanyKey>ORI</CompanyKey><UserID>205079</UserID>'.
+						'<ClaimID>'.$claims[0]['Claim']['claimID'].'</ClaimID>'.
+					'</oParms>'.
+				'</GetClaimData>';
+		$data = new SoapVar($xml,XSD_ANYXML);
+		
+		$result = $soap->GetClaimData($data);
+		var_dump($result);
+		var_dump($soap->__getLastRequest());
+		
+	}
 
 	function ajax_cron() {
 		$newClaims = 0;
@@ -148,22 +181,28 @@ class ClaimsController extends AppController {
 		$this->layout = "ajax";
 		App::uses('HttpSocket', 'Network/Http');
 		$HttpSocket = new HttpSocket();
+		
+		//$startDate = '-2 hour';
+		$startDate = '-3 days';
+		
 		$data = array(
 			'ACID' => '33152',
 			'companyKey' => 'ORI',
 			'LoginCode' => 'FRARECRAC7AF8E76AVAC',
-			'startDate' => date('Y-m-d\TH:i:s',strtotime('-2 hour')),
+			'startDate' => date('Y-m-d\TH:i:s',strtotime($startDate)),
 			'endDate' => date('Y-m-d\TH:i:s'),
 			'searchFilter' => ''
 		);
 
 		$claimsfile = $HttpSocket->post('https://filetrac.onlinereportinginc.com/FileTracAPI/FileTracAPI.asmx/FileTracAPI_GetClaims', $data);
+		
 		if($claimsfile->isOk()) {
 			$response = Xml::toArray(Xml::build($claimsfile->body()));
 			$claimsXml = file_get_contents($response['string']);
 
 			try {
-				$claimsInfo = Xml::toArray(Xml::build($response['string']));				
+				$claimsInfo = Xml::toArray(Xml::build($response['string']));
+		
 				if(!empty($claimsInfo['CLAIMS_PACKET']['claim']['claimID'])) {
 					$claimsInfo['CLAIMS_PACKET']['claim'] = array(
 						$claimsInfo['CLAIMS_PACKET']['claim']
@@ -206,7 +245,8 @@ class ClaimsController extends AppController {
 								'first_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactFName'],
 								'last_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactLName'],
 								'user_id' => $user,
-								'json' => json_encode($claim)
+								'json' => json_encode($claim),
+								'status' => 'NEW'
 							),
 							'User' => array(
 								'id' => $user,
@@ -221,6 +261,20 @@ class ClaimsController extends AppController {
 						$this->Claim->create();
 						if(!$this->Claim->saveAll($data)) {
 							debug($data);
+						}
+					} else {
+						if($claim_id['Claim']['status'] == 'NEW') {
+							$data = array(
+								'Claim' => array(
+									'id' => $claim_id['Claim']['id'],
+									'user_id' => $user,
+									'json' => json_encode($claim),
+								)
+							);
+							$this->Claim->create();
+							if(!$this->Claim->save($data)) {
+								debug($data);
+							}
 						}
 					}
 				}
