@@ -33,7 +33,9 @@
 					<div class="btn-group">
 						<?php
 							echo $this->Html->link('Preliminary','/ajax/claims/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
-							echo $this->Html->link('Preliminary PDF','/ajax/claims/pdf/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
+							echo $this->Html->link('Advanced','/ajax/claims/advanced/'.$claim['Claim']['id'],array('class'=>'btn'));
+							echo $this->Html->link('Engineer','/ajax/claims/engineer/'.$claim['Claim']['id'],array('class'=>'btn'));
+							//echo $this->Html->link('Preliminary PDF','/ajax/claims/pdf/preliminary/'.$claim['Claim']['id'],array('class'=>'btn'));
 						?>	
 					</div>
 				</td>

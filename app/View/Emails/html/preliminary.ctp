@@ -1,1 +1,1 @@
-<p>There's a new preliminary report uploaded <a href="<?php echo $url ?>">HERE</a></p>
+<p>There's a new <?php echo $report ?> report uploaded <a href="<?php echo $url ?>">HERE</a></p>

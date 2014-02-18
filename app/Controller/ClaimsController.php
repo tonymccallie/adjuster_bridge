@@ -430,10 +430,24 @@ $data = array(
 		$html2pdf->pdf->SetDisplayMode('real');
 		$html2pdf->writeHTML($content);
 		$filename = $id.'_'.$report.'.pdf';
-		//$file = $html2pdf->Output(APP . 'webroot/reports/'.$filename,'F'); //'F' to write file
+		//$savefile = $html2pdf->Output(APP . 'webroot/reports/'.$filename,'F'); //'F' to write file
+		//$file = 'CHECK DIRECTORY';
 		$file = base64_encode($html2pdf->Output('','S')); //stream file
 		$claim = $this->Claim->findById($id);
-		$this->set(compact('filename','file','claim'));
+		$title = 'Unset Title';
+		switch($report) {
+			case 'preliminary':
+				$title = 'Preliminary Report';
+				break;
+			case 'engineer':
+				$title = 'Engineer Request';
+				break;
+			case 'advanced':
+				$title = 'Flood Advanced Payment Request';
+				break;
+			
+		}
+		$this->set(compact('filename','file','claim','title'));
 	}
 
 	public function ajax_preliminary($claim_id = null) {
@@ -443,15 +457,22 @@ $data = array(
 		$this->set(compact('claim'));
 	}
 	
+	public function ajax_advanced($claim_id = null) {
+		Configure::write('debug', 2);
+		$this->layout = "print";
+		$claim = $this->Claim->findByid($claim_id);
+		$this->set(compact('claim'));
+	}
+	
+	public function ajax_engineer($claim_id = null) {
+		Configure::write('debug', 2);
+		$this->layout = "print";
+		$claim = $this->Claim->findByid($claim_id);
+		$this->set(compact('claim'));
+	}
+	
 	public function ajax_upload_latest() {
 		$this->layout = "ajax";
-		$preliminaries = $this->Claim->find('all',array(
-			'conditions' => array(
-				'Claim.preliminary_uploaded NOT' => null
-			)
-		));
-		
-		$prelim_files = array();
 		
 		$soap = new SoapClient("http://ftservices.onlinereportinginc.com/service.asmx?WSDL",array(
 			'trace'=>1,'soap_version' => SOAP_1_2,
@@ -460,34 +481,45 @@ $data = array(
 			)
 		));
 		
+		foreach(array('preliminary','advanced','engineer') as $report) {
 		
-		foreach($preliminaries as $preliminary) {
-			$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/'.$preliminary['Claim']['id']);			
-			$data = new SoapVar($xml,XSD_ANYXML);
-			$result = $soap->UploadReport($data);
-			if(!empty($result->UploadReportResult)) {
-				$filetrac = $result->UploadReportResult;
-				Common::email(array(
-					'to' => 'mikemorgan@advadj.com',
-					'subject' => 'New Preliminary Report Uploaded',
-					'template' => 'preliminary',
-					'variables' => array(
-						'url' => 'https://filetrac.onlinereportinginc.com/system/reportView.asp?reportID='.$filetrac,
-						'claim' => $preliminary
-					)
-				),'');
-				$data = array(
-					'Claim' => array(
-						'id' => $preliminary['Claim']['id'],
-						'preliminary_uploaded' => null
-					)
-				);
-				$this->Claim->create();
-				$this->Claim->save($data);
+			$available = $this->Claim->find('all',array(
+				'conditions' => array(
+					'Claim.'.$report.'_uploaded NOT' => null
+				)
+			));
+			
+			foreach($available as $claim) {
+				$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/'.$report.'/'.$claim['Claim']['id']);			
+				$data = new SoapVar($xml,XSD_ANYXML);
+				$result = $soap->UploadReport($data);
+				if(!empty($result->UploadReportResult)) {
+					$filetrac = $result->UploadReportResult;
+					Common::email(array(
+						'to' => 'mikemorgan@advadj.com',
+						//'to' => 'tony@threeleaf.net',
+						'subject' => 'New Report Uploaded',
+						'template' => 'preliminary',
+						'variables' => array(
+							'url' => 'https://filetrac.onlinereportinginc.com/system/reportView.asp?reportID='.$filetrac,
+							'claim' => $claim,
+							'report' => $report
+						)
+					),'');
+					$data = array(
+						'Claim' => array(
+							'id' => $claim['Claim']['id'],
+							$report.'_uploaded' => null
+						)
+					);
+					$this->Claim->create();
+					$this->Claim->save($data);
+				}
 			}
+			
+			echo date('Y-m-d H:i:s')." - ".count($available)." ".$report." reports uploaded\n";
 		}
 		
-		echo date('Y-m-d H:i:s')." - ".count($preliminaries)." preliminaries uploaded\n";
 	}
 
 	public function admin_delete($id = null) {
