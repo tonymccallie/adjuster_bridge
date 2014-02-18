@@ -85,6 +85,7 @@ class ClaimsController extends AppController {
 			'post' => $_POST,
 			'message' => 'init'
 		);
+		$this->log($message);
 		
 		$json = json_decode($this->request->data['json'],true);
 
