@@ -219,7 +219,7 @@
 					<tr>
 						<td>Building</td>
 						<td style="border-bottom: solid 1px black;">$<?php echo (!empty($json['claimCoverageA'])&&(is_numeric($json['claimCoverageA'])))?number_format($json['claimCoverageA'],2,'.',','):0 ?></td>
-						<td style="border-bottom: solid 1px black;"></td>
+						<td style="border-bottom: solid 1px black;">$<?php echo (!empty($json['claimDeductable'])&&(is_numeric($json['claimDeductable'])))?number_format($json['claimDeductable'],2,'.',','):0 ?></td>
 						<td style="border-bottom: solid 1px black;">$<?php echo number_format($claim['Claim']['building_reserve'],2,'.',',') ?></td>
 					</tr>
 					<tr>
@@ -627,7 +627,7 @@
 			<td style="width: 10%;"></td>
 			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
 			<td style="width: 10%;"></td>
-			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?></td>
+			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?></td>
 			<td style="width: 10%;"></td>
 			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['fc_num'] ?></td>
 			<td style="width: 10%;"></td>
@@ -638,7 +638,7 @@
 			<td style="width: 10%;"></td>
 			<td style="width: 40%; text-align: center;">Adjuster's Signature</td>
 			<td style="width: 10%;"></td>
-			<td style="width: 10%; text-align: center;">Adjuster's CFN</td>
+			<td style="width: 10%; text-align: center;">Adjuster's FCN</td>
 			<td style="width: 10%;"></td>
 		</tr>
 	</table>
@@ -730,7 +730,7 @@
 							Adjuster Name:
 						</td>
 						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 					</tr>
 				</table>
@@ -882,7 +882,7 @@
 							Adjuster Name:
 						</td>
 						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 					</tr>
 				</table>
@@ -1034,7 +1034,7 @@
 							Adjuster Name:
 						</td>
 						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 					</tr>
 				</table>
@@ -1063,7 +1063,7 @@
 					</tr>
 					<tr>
 						<td>Comment:</td>
-						<td>Water Inside</td>
+						<td>Water Line Inside</td>
 					</tr>
 				</table>
 			</td>
@@ -1090,7 +1090,7 @@
 					</tr>
 					<tr>
 						<td>Comment:</td>
-						<td>Water Outside</td>
+						<td>Water Line Outside</td>
 					</tr>
 				</table>
 			</td>
@@ -1186,7 +1186,7 @@
 							Adjuster Name:
 						</td>
 						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 					</tr>
 				</table>
@@ -1338,7 +1338,7 @@
 							Adjuster Name:
 						</td>
 						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['Claim']['last_name'] ?>
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 					</tr>
 				</table>
