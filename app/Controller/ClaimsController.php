@@ -97,11 +97,7 @@ class ClaimsController extends AppController {
 		);
 		
 		foreach($pics as $pic) {
-			if(!empty($data['Claim'][$pic])) {
-				$filename = $data['Claim']['id'].$pic.'.jpg';
-				file_put_contents(APP . 'webroot/uploads/'.$filename, base64_decode(str_replace('data:image/jpeg;base64,', '', $data['Claim'][$pic])));
-				$data['Claim'][$pic] = $filename;
-			}
+			unset($data['Claim'][$pic]);
 		}
 		
 		$signatures = array(
@@ -155,6 +151,20 @@ class ClaimsController extends AppController {
 		);
 		
 		$this->log($this->request);
+		$tempFile = $this->request->params['form']['image']['tmp_name'];
+		move_uploaded_file($tempFile,APP . 'webroot/uploads/'.$this->request->params['form']['image']['name']);
+
+		$data = array(
+			'Claim' => array(
+				'id' => $this->request->data['claim_id'],
+				$this->request->data['field'] => $this->request->params['form']['image']['name']
+			)
+		);
+		
+		$this->Claim->create();
+		if($this->Claim->save($data)) {
+			$message['status'] = 'SUCCESS';
+		}
 		
 		$this->set(array(
 			'message' => $message,
