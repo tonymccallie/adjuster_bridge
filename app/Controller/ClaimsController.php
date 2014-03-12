@@ -150,7 +150,6 @@ class ClaimsController extends AppController {
 			'message' => 'No information passed'
 		);
 		
-		$this->log($this->request);
 		$tempFile = $this->request->params['form']['image']['tmp_name'];
 		move_uploaded_file($tempFile,APP . 'webroot/uploads/'.$this->request->params['form']['image']['name']);
 
