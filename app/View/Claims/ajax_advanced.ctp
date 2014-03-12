@@ -2,7 +2,7 @@
 	$unmarked = '[&nbsp;&nbsp;]';
 	$marked = '[<b>X</b>]';
 	$json = json_decode($claim['Claim']['json'],true);
-	$total = $claim['Claim']['content_advance']+$claim['Claim']['building_advance']+$claim['Claim']['content_reserve']+$claim['Claim']['building_reserve'];
+	$total = $claim['Claim']['content_advance']+$claim['Claim']['building_advance'];
 ?>
 <style type="text/css" media="screen">
 <!--

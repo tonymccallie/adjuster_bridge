@@ -145,6 +145,21 @@ class ClaimsController extends AppController {
 		));
 	}
 	
+	function app_image_upload() {
+		$message = array(
+			'status' => 'ERROR',
+			'data' => $this->request->data,
+			'message' => 'No information passed'
+		);
+		
+		$this->log($this->request);
+		
+		$this->set(array(
+			'message' => $message,
+			'_serialize' => 'message'
+		));
+	}
+	
 	function app_close($id = null) {
 		$message = array(
 			'status' => 'ERROR',
