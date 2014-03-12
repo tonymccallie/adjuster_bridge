@@ -146,6 +146,8 @@ class ClaimsController extends AppController {
 	}
 	
 	function app_image_upload() {
+		Configure::write('debug', 0);
+		$this->layout = "ajax";
 		$message = array(
 			'status' => 'ERROR',
 			'data' => $this->request->data,
