@@ -126,6 +126,10 @@ class ClaimsController extends AppController {
 			$data['Claim']['engineer_uploaded'] = date('Y-m-d H:i:s');
 		}
 		
+		if(!empty($json['upload_inspection'])) {
+			$data['Claim']['inspection_uploaded'] = date('Y-m-d H:i:s');
+		}
+		
 		if($this->Claim->save($data)) {
 			$message = array(
 				'status' => 'SUCCESS',
