@@ -1,43 +1,4 @@
 <?php
-class Report {
-	public $Login = 'mikemorgan';
-	public $Password = 'rincon1$';
-	public $CompanyKey = 'ORI';
-    public $ReportFile = '';
-    public $UserID = '';
-    public $ClaimID = '';
-    public $ClaimFileID = '';
-    public $ReportFileName = '';
-    public $ReportTitle = 'Preliminary Report';
-    public $ReportDescription = '';
-    public $PrintedFlag = 1;
-    public function __construct($file) {
-    	$this->ReportFile = $file;
-    	$this->UserID = '205079';
-    	$this->ClaimID = '3303793';
-    	$this->ClaimFileID = '27326';
-	    $this->ReportFileName = '110_preliminary.pdf';
-    	$this->ReportTitle = 'Preliminary Report';
-    	$this->ReportDescription = 'Preliminary Report uploaded from the AdvAdj App. on '.date('m/d/Y');
-    }  
-	
-    /*
-function oReport($claim, $file, $filename) {
-    	$file = base64_encode(file_get_contents('http://localhost/adjuster_bridge/reports/110_preliminary.pdf'));
-    	$this->Login = 'mikemorgan';
-    	$this->Password = 'rincon1$';
-    	$this->CompanyKey = 'ORI';
-    	$this->ReportFile = $file;
-    	$this->UserID = $claim['User']['userID'];
-    	$this->ClaimID = $claim['Claim']['claimFileID'];
-    	$this->claimFileID = $claim['Claim']['claimFileID'];
-    	$this->ReportFileName = $filename;
-    	$this->ReportTitle = 'Preliminary Report';
-    	$this->ReportDescription = 'Preliminary Report uploaded from the AdvAdj App. on '.date('m/d/Y');
-    }
-*/
-}
-
 App::uses('AppController', 'Controller');
 class ClaimsController extends AppController {
 	function app_list() {
@@ -92,8 +53,7 @@ class ClaimsController extends AppController {
 			'Claim' => $json['data']
 		);
 		$pics = array(
-			'pic_front_left','pic_front_right','pic_rear_left','pic_rear_right','pic_water_inside',
-			'pic_water_outside','pic_optional1','pic_optional2','pic_optional3','pic_optional4'
+			'pic_front_right','pic_front_left','pic_rear_left','pic_rear_right','pic_water_inside','pic_water_outside','pic_roof_front','pic_roof_rear','pic_optional1','pic_optional2','pic_optional3','pic_optional4','pic_optional5','pic_optional6'
 		);
 		
 		foreach($pics as $pic) {
@@ -129,7 +89,7 @@ class ClaimsController extends AppController {
 		if(!empty($json['upload_inspection'])) {
 			$data['Claim']['inspection_uploaded'] = date('Y-m-d H:i:s');
 		}
-		
+		$this->log($data);
 		if($this->Claim->save($data)) {
 			$message = array(
 				'status' => 'SUCCESS',
@@ -388,31 +348,6 @@ class ClaimsController extends AppController {
 		
 		$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/preliminary/110');
 		$data = new SoapVar($xml,XSD_ANYXML);
-
-		/*
-$data = array(
-			'oReport' => array(
-				'Login' => 'mikemorgan',
-				'Password' => 'rincon1$',
-				'CompanyKey' => 'ORI',
-				'ReportFile' => $file,
-				'UserID' => '205079',
-				'ClaimID' => '3303793',
-				'ClaimFileID' => '27326',
-				'ReportFileName' => '110_preliminary.pdf',
-				'ReportTitle' => 'Preliminary',
-				'ReportDescription' => 'Preliminary Report uploaded from the AdvAdj App. on '.date('m/d/Y'),
-				'PrintedFlag' => 1
-			)
-		);
-*/
-		
-		/*
-$data = array(
-			'Report' => new Report($file)
-		);
-*/
-
 		
 		$result = $soap->UploadReport($data);
 		debug($result);
@@ -475,6 +410,9 @@ $data = array(
 			case 'advanced':
 				$title = 'Flood Advanced Payment Request';
 				break;
+			case 'inspection':
+				$title = 'Inspection for Residential';
+				break;
 			
 		}
 		$this->set(compact('filename','file','claim','title'));
@@ -501,6 +439,13 @@ $data = array(
 		$this->set(compact('claim'));
 	}
 	
+	public function ajax_inspection($claim_id = null) {
+		Configure::write('debug', 2);
+		$this->layout = "print";
+		$claim = $this->Claim->findByid($claim_id);
+		$this->set(compact('claim'));
+	}
+	
 	public function ajax_upload_latest() {
 		$this->layout = "ajax";
 		
@@ -511,7 +456,7 @@ $data = array(
 			)
 		));
 		
-		foreach(array('preliminary','advanced','engineer') as $report) {
+		foreach(array('preliminary','advanced','engineer','inspection') as $report) {
 		
 			$available = $this->Claim->find('all',array(
 				'conditions' => array(
