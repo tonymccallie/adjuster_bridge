@@ -683,7 +683,7 @@
 		<?php if(!empty($claim['Claim']['pic_front_left'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_left'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_left'] ?>">
 			</td>
 			<td>
 				<table>
@@ -710,7 +710,7 @@
 		<?php if(!empty($claim['Claim']['pic_front_right'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_right'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_right'] ?>">
 			</td>
 			<td>
 				<table>
@@ -862,7 +862,7 @@
 		<?php if(!empty($claim['Claim']['pic_rear_left'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_left'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_left'] ?>">
 			</td>
 			<td>
 				<table>
@@ -889,7 +889,7 @@
 		<?php if(!empty($claim['Claim']['pic_rear_right'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_right'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_right'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1041,7 +1041,7 @@
 		<?php if(!empty($claim['Claim']['pic_water_inside'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_inside'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_inside'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1068,7 +1068,7 @@
 		<?php if(!empty($claim['Claim']['pic_water_outside'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_outside'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_outside'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1220,7 +1220,7 @@
 		<?php if(!empty($claim['Claim']['pic_roof_front'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_roof_front'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_roof_front'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1247,7 +1247,7 @@
 		<?php if(!empty($claim['Claim']['pic_roof_rear'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_roof_rear'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_roof_rear'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1399,7 +1399,7 @@
 		<?php if(!empty($claim['Claim']['pic_optional1'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional1'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional1'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1426,7 +1426,7 @@
 		<?php if(!empty($claim['Claim']['pic_optional2'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional2'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional2'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1578,7 +1578,7 @@
 		<?php if(!empty($claim['Claim']['pic_optional3'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional3'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional3'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1605,7 +1605,7 @@
 		<?php if(!empty($claim['Claim']['pic_optional4'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional4'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional4'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1757,7 +1757,7 @@
 		<?php if(!empty($claim['Claim']['pic_optional4'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional5'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional5'] ?>">
 			</td>
 			<td>
 				<table>
@@ -1784,7 +1784,7 @@
 		<?php if(!empty($claim['Claim']['pic_optional6'])): ?>
 		<tr>
 			<td>
-				<img style="height: 320px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional6'] ?>">
+				<img style="height: 370px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional6'] ?>">
 			</td>
 			<td>
 				<table>
