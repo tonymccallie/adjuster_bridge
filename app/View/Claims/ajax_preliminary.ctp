@@ -627,7 +627,11 @@
 			<td style="width: 10%;"></td>
 			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
 			<td style="width: 10%;"></td>
-			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?></td>
+			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;">
+				<?php if(!empty($claim['User']['signature'])):?>
+					<img style="width: 300px;" src="<?php echo $claim['User']['signature'] ?>">
+				<?php endif ?>
+			</td>
 			<td style="width: 10%;"></td>
 			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['fc_num'] ?></td>
 			<td style="width: 10%;"></td>
