@@ -511,9 +511,14 @@ class ClaimsController extends AppController {
 				$result = $soap->UploadReport($data);
 				if(!empty($result->UploadReportResult)) {
 					$filetrac = $result->UploadReportResult;
+					if(!empty($claim['Claim']['email'])) {
+						$email = $claim['Claim']['email'];
+					} else {
+						$email = 'mikemorgan@advadj.com';
+					}
 					Common::email(array(
-						'to' => 'mikemorgan@advadj.com',
-						//'to' => 'tony@threeleaf.net',
+						'to' => $email,
+						'bcc' => 'tony@threeleaf.net',
 						'subject' => 'New Report Uploaded',
 						'template' => 'preliminary',
 						'variables' => array(
