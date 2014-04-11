@@ -3,6 +3,34 @@
 	$marked = '[<b>X</b>]';
 	$json = json_decode($claim['Claim']['json'],true);
 	
+	$primaryAdjuster = array();
+	$assignedSupervisor = array();
+	$claimsRep = array();
+	
+	foreach($json['USER_PACKET'] as $userpacket) {
+		foreach($userpacket as $userrole => $packetinfo) {
+			switch($userrole) {
+				case 'PrimaryAdjuster':
+					$primaryAdjuster = $packetinfo;
+					break;
+				case 'PrimaryClaimsRep':
+					if(!empty($packetinfo[0]['userID'])) {
+						$claimsRep = $packetinfo[0];
+					} else {
+						$claimsRep = $packetinfo;
+					}
+					if(empty($claimsRep['companyName'])) {
+						$claimsRep['companyName'] = 'Unknown';
+					}
+					break;
+				case 'AssignedSupervisor':
+					$assignedSupervisor = $packetinfo;
+					break;
+				
+			}
+		}
+	}
+	
 	//debug($claim['User']);
 ?>
 <style type="text/css" media="screen">
@@ -56,7 +84,7 @@
 							Requested By:
 						</td>
 						<td style="width: 70%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['adjusterFName'].' '.$json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['adjusterLName'] ?>
+							<?php echo $claimsRep['adjusterFName'].' '.$claimsRep['adjusterLName'] ?>
 						</td>
 					</tr>
 				</table>
@@ -97,7 +125,7 @@
 				Carrier Name:
 			</td>
 			<td style="width: 23%; border-bottom: solid 1px black;">
-				<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+				<?php echo $claimsRep['companyName'] ?>
 			</td>
 			<td style="width: 10%; font-weight: bold;">
 				Insured:
@@ -594,7 +622,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -773,7 +801,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -952,7 +980,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1131,7 +1159,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1310,7 +1338,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1489,7 +1517,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1668,7 +1696,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
+							<?php echo $claimsRep['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
