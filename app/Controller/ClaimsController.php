@@ -519,6 +519,7 @@ class ClaimsController extends AppController {
 					Common::email(array(
 						'to' => $email,
 						'bcc' => 'tony@threeleaf.net',
+						'cc' =>'mikemorgan@advadj.com',
 						'subject' => 'New Report Uploaded',
 						'template' => 'preliminary',
 						'variables' => array(
