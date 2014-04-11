@@ -177,7 +177,7 @@ class ClaimsController extends AppController {
 				'Claim.user_id' => $unassigned
 			)
 		));
-		
+
 		$soap = new SoapClient("http://ftservices.onlinereportinginc.com/service.asmx?WSDL",array(
 			'trace'=>1,'soap_version' => SOAP_1_2,
 			'classmap'=> array(
@@ -200,6 +200,24 @@ class ClaimsController extends AppController {
 		var_dump($soap->__getLastRequest());
 		
 	}
+	
+	function ajax_update() {
+		Configure::write('debug', 2);
+		$this->layout = "ajax";
+		$claims = $this->Claim->find('all', array(
+			'conditions' => array(
+				'Claim.claimFileID' => '0'
+			)
+		));
+		
+		foreach($claims as $claim) {
+			$json = json_decode($claim['Claim']['json'],true);
+			$claim['Claim']['claimFileID'] = $json['claimFileID'];
+			$this->Claim->create();
+			$this->Claim->save($claim);
+		}
+		
+	}
 
 	function ajax_cron() {
 		$newClaims = 0;
@@ -219,29 +237,49 @@ class ClaimsController extends AppController {
 			'endDate' => date('Y-m-d\TH:i:s'),
 			'searchFilter' => ''
 		);
-
 		$claimsfile = $HttpSocket->post('https://filetrac.onlinereportinginc.com/FileTracAPI/FileTracAPI.asmx/FileTracAPI_GetClaims', $data);
-		
 		if($claimsfile->isOk()) {
 			$response = Xml::toArray(Xml::build($claimsfile->body()));
 			$claimsXml = file_get_contents($response['string']);
-
 			try {
 				$claimsInfo = Xml::toArray(Xml::build($response['string']));
-		
 				if(!empty($claimsInfo['CLAIMS_PACKET']['claim']['claimID'])) {
 					$claimsInfo['CLAIMS_PACKET']['claim'] = array(
 						$claimsInfo['CLAIMS_PACKET']['claim']
 					);
 				}
 				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
+					$primaryAdjuster = array();
+					$assignedSupervisor = array();
+					$claimsRep = array();
+					
+					foreach($claim['USER_PACKET'] as $userpacket) {
+						foreach($userpacket as $userrole => $packetinfo) {
+							switch($userrole) {
+								case 'PrimaryAdjuster':
+									$primaryAdjuster = $packetinfo;
+									break;
+								case 'PrimaryClaimsRep':
+									$claimsRep = $packetinfo;
+									break;
+								case 'AssignedSupervisor':
+									$assignedSupervisor = $packetinfo;
+									break;
+								
+							}
+						}
+					}
+					if(empty($assignedSupervisor)) {
+						$assignedSupervisor['supervisorEMail'] = 'mikemorgan@advadj.com';
+					}
+					
 					$user = $this->Claim->User->lookup(array(
-						'username' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin']
+						'username' => $primaryAdjuster['userLogin']
 					));
-					if(empty($claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'])) {
-						$claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'] = "UNASSIGNED";
-						$claim['USER_PACKET'][0]['PrimaryAdjuster']['userEMail'] = "unassigned@advancedadjusting.com";
-						$claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin'] = "UNASSIGNED";
+					if(empty($primaryAdjuster['adjusterFName'])) {
+						$primaryAdjuster['adjusterFName'] = "UNASSIGNED";
+						$primaryAdjuster['userEMail'] = "unassigned@advancedadjusting.com";
+						$primaryAdjuster['userLogin'] = "UNASSIGNED";
 					}
 					
 					$claim_id = $this->Claim->find('first',array(
@@ -272,21 +310,22 @@ class ClaimsController extends AppController {
 								'last_name' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactLName'],
 								'user_id' => $user,
 								'json' => json_encode($claim),
-								'status' => 'NEW'
+								'status' => 'NEW',
+								'email' => $assignedSupervisor['supervisorEMail']
 							),
 							'User' => array(
 								'id' => $user,
 								'role_id' => 2,
-								'first_name' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterFName'],
-								'last_name' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['adjusterLName'],
-								'email' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userEMail'],
-								'username' => $claim['USER_PACKET'][0]['PrimaryAdjuster']['userLogin'],
+								'first_name' => $primaryAdjuster['adjusterFName'],
+								'last_name' => $primaryAdjuster['adjusterLName'],
+								'email' => $primaryAdjuster['userEMail'],
+								'username' => $primaryAdjuster['userLogin'],
 							)
 						);
 						$newClaims++;
 						$this->Claim->create();
 						if(!$this->Claim->saveAll($data)) {
-							debug($data);
+							debug(array('ERROR-1',$this->Claim->validationErrors,$data));
 						}
 					} else {
 						if($claim_id['Claim']['status'] == 'NEW') {
@@ -295,11 +334,13 @@ class ClaimsController extends AppController {
 									'id' => $claim_id['Claim']['id'],
 									'user_id' => $user,
 									'json' => json_encode($claim),
+									'phone' => $claim['CLAIM_CONTACTS']['Contact'][0]['contactPhone3'],
+									'email' => $assignedSupervisor['supervisorEMail']
 								)
 							);
 							$this->Claim->create();
 							if(!$this->Claim->save($data)) {
-								debug($data);
+								debug(array('ERROR-2',$this->Claim->validationErrors,$data));
 							}
 						}
 					}

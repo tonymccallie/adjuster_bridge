@@ -111,6 +111,14 @@ class UsersController extends AppController {
 		);
 		
 		if(!empty($this->request->data['User']['id'])) {
+			/*
+if(!empty($this->request->data['User']['signature'])) {
+				$filename = $this->request->data['User']['id'].'_signature.png';
+				file_put_contents(APP . 'webroot/uploads/'.$filename, base64_decode(str_replace('data:image/png;base64,', '', $this->request->data['User']['signature'])));
+				$this->request->data['User']['signature'] = $filename;
+			}
+*/
+		
 			if($this->User->save($this->request->data)) {
 				$user = $this->User->find('first',array(
 					'conditions' => array(

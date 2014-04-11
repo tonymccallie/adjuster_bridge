@@ -2,7 +2,8 @@
 	$unmarked = '[&nbsp;&nbsp;]';
 	$marked = '[<b>X</b>]';
 	$json = json_decode($claim['Claim']['json'],true);
-	//debug($json);
+	
+	//debug($claim['User']);
 ?>
 <style type="text/css" media="screen">
 <!--
@@ -55,7 +56,7 @@
 							Requested By:
 						</td>
 						<td style="width: 70%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['adjusterFName'].' '.$json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['adjusterLName'] ?>
 						</td>
 					</tr>
 				</table>
@@ -96,7 +97,7 @@
 				Carrier Name:
 			</td>
 			<td style="width: 23%; border-bottom: solid 1px black;">
-				<?php echo 'NEED THIS INFO' ?>
+				<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 			</td>
 			<td style="width: 10%; font-weight: bold;">
 				Insured:
@@ -108,7 +109,7 @@
 				Contact:
 			</td>
 			<td style="width: 24%; border-bottom: solid 1px black;">
-				<?php echo $claim['Claim']['policy_number'] ?>
+				<?php echo $claim['Claim']['phone'] ?>
 			</td>
 		</tr>
 		<tr>
@@ -116,7 +117,7 @@
 				Agent Name:
 			</td>
 			<td style="width: 23%; border-bottom: solid 1px black;">
-				<?php echo 'NEED THIS INFO' ?>
+				<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 			</td>
 			<td style="width: 10%; font-weight: bold;">
 				Physical Adress:
@@ -136,7 +137,7 @@
 				Agent Phone:
 			</td>
 			<td style="width: 23%; border-bottom: solid 1px black;">
-				<?php echo 'NEED THIS INFO' ?>
+				<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 			</td>
 			<td style="width: 10%; font-weight: bold;">
 				&nbsp;
@@ -156,7 +157,7 @@
 				Inspected By:
 			</td>
 			<td style="width: 23%; border-bottom: solid 1px black;">
-				Advanced Adjusting
+				<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 			</td>
 			<td style="width: 10%; font-weight: bold;">
 				Contact Phone:
@@ -168,7 +169,7 @@
 				Year Constructed:
 			</td>
 			<td style="width: 24%; border-bottom: solid 1px black;">
-				<?php echo 'NEED THIS INFO' ?>
+				Unknown
 			</td>
 		</tr>
 		<tr>
@@ -542,7 +543,11 @@
 			<td style="width: 10%;"></td>
 			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
 			<td style="width: 10%;"></td>
-			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?></td>
+			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;">
+				<?php if(!empty($claim['User']['signature'])):?>
+					<img style="width: 300px;" src="<?php echo $claim['User']['signature'] ?>">
+				<?php endif ?>
+			</td>
 			<td style="width: 10%;"></td>
 			<td style="width: 10%; border-bottom: solid 1px black; text-align: center;"><?php echo $claim['User']['fc_num'] ?></td>
 			<td style="width: 10%;"></td>
@@ -589,7 +594,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -601,7 +606,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -609,7 +614,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -629,7 +634,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -649,7 +654,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -661,7 +666,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
@@ -768,7 +773,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -780,7 +785,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -788,7 +793,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -808,7 +813,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -828,7 +833,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -840,7 +845,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
@@ -947,7 +952,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -959,7 +964,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -967,7 +972,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -987,7 +992,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -1007,7 +1012,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -1019,7 +1024,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
@@ -1126,7 +1131,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1138,7 +1143,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -1146,7 +1151,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -1166,7 +1171,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -1186,7 +1191,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -1198,7 +1203,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
@@ -1305,7 +1310,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1317,7 +1322,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -1325,7 +1330,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -1345,7 +1350,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -1365,7 +1370,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -1377,7 +1382,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
@@ -1484,7 +1489,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1496,7 +1501,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -1504,7 +1509,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -1524,7 +1529,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -1544,7 +1549,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -1556,7 +1561,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
@@ -1663,7 +1668,7 @@
 							Carrier Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['USER_PACKET'][2]['PrimaryClaimsRep'][0]['companyName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -1675,7 +1680,7 @@
 							Contact:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
+							<?php echo $claim['Claim']['phone'] ?>
 						</td>
 					</tr>
 					<tr>
@@ -1683,7 +1688,7 @@
 							Agent Name:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactLName'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Physical Adress:
@@ -1703,7 +1708,7 @@
 							Agent Phone:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							<?php echo $json['CLAIM_CONTACTS']['Contact'][1]['contactPhone1'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							&nbsp;
@@ -1723,7 +1728,7 @@
 							Inspected By:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							Advanced Adjusting
+							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Contact Phone:
@@ -1735,7 +1740,7 @@
 							Year Constructed:
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
-							<?php echo 'NEED THIS INFO' ?>
+							Unknown
 						</td>
 					</tr>
 					<tr>
