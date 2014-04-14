@@ -62,6 +62,12 @@ class ClaimsController extends AppController {
 			unset($data['Claim'][$pic]);
 		}
 		
+		for($intnotes = 1; $intnotes <= 6; $intnotes++) {
+			if(!empty($json['images']['pic_optional'.$intnotes.'_notes'])) {
+				$data['Claim']['pic_optional'.$intnotes.'_notes'] = $json['images']['pic_optional'.$intnotes.'_notes'];
+			}
+		}
+		
 		$signatures = array(
 			'signature','witness'
 		);
@@ -294,6 +300,7 @@ class ClaimsController extends AppController {
 					));
 					
 					if(!$claim_id) {
+						$this->log(array('ajax_cron: new_claim',$claim));
 						$data = array(
 							'Claim' => array(
 								'claimID' => $claim['claimID'],
