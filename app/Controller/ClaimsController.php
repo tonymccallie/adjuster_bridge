@@ -97,6 +97,9 @@ class ClaimsController extends AppController {
 		if(!empty($json['upload_inspection'])) {
 			$data['Claim']['inspection_uploaded'] = date('Y-m-d H:i:s');
 		}
+		
+		unset($data['Claim']['claimFileID']);
+		
 		//$this->log($data);
 		if($this->Claim->save($data)) {
 			$message = array(
@@ -237,7 +240,7 @@ class ClaimsController extends AppController {
 		$HttpSocket = new HttpSocket();
 		
 		//$startDate = '-2 hour';
-		$startDate = '-3 days';
+		$startDate = '-5 days';
 		
 		$data = array(
 			'ACID' => '33152',
@@ -258,6 +261,7 @@ class ClaimsController extends AppController {
 						$claimsInfo['CLAIMS_PACKET']['claim']
 					);
 				}
+				die(debug($claimsInfo['CLAIMS_PACKET']['claim']));
 				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
 					$primaryAdjuster = array();
 					$assignedSupervisor = array();
