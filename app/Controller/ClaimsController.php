@@ -252,14 +252,13 @@ class ClaimsController extends AppController {
 		);
 		$claimsfile = $HttpSocket->post('https://filetrac.onlinereportinginc.com/FileTracAPI/FileTracAPI.asmx/FileTracAPI_GetClaims', $data);
 		if($claimsfile->isOk()) {
-$this->log('isOk');
 			$response = Xml::toArray(Xml::build($claimsfile->body()));
 			$claimsXml = file_get_contents($response['string']);
-$this->log('get_contents');
+$this->log(array('get_contents',$claimsXml));
 			try {
 $this->log($response['string']);
 				$claimsInfo = Xml::toArray(Xml::build($response['string']));
-$this->log('toArray');
+$this->log('toArray',$claimsInfo);
 				if(!empty($claimsInfo['CLAIMS_PACKET']['claim']['claimID'])) {
 					$claimsInfo['CLAIMS_PACKET']['claim'] = array(
 						$claimsInfo['CLAIMS_PACKET']['claim']
