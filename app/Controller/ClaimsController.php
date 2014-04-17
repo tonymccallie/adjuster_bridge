@@ -252,10 +252,14 @@ class ClaimsController extends AppController {
 		);
 		$claimsfile = $HttpSocket->post('https://filetrac.onlinereportinginc.com/FileTracAPI/FileTracAPI.asmx/FileTracAPI_GetClaims', $data);
 		if($claimsfile->isOk()) {
+$this->log('isOk');
 			$response = Xml::toArray(Xml::build($claimsfile->body()));
 			$claimsXml = file_get_contents($response['string']);
+$this->log('get_contents');
 			try {
+$this->log($response['string']);
 				$claimsInfo = Xml::toArray(Xml::build($response['string']));
+$this->log('toArray');
 				if(!empty($claimsInfo['CLAIMS_PACKET']['claim']['claimID'])) {
 					$claimsInfo['CLAIMS_PACKET']['claim'] = array(
 						$claimsInfo['CLAIMS_PACKET']['claim']
@@ -263,6 +267,7 @@ class ClaimsController extends AppController {
 				}
 				die(debug($claimsInfo['CLAIMS_PACKET']['claim']));
 				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
+					$this->log($claim);
 					$primaryAdjuster = array();
 					$assignedSupervisor = array();
 					$claimsRep = array();
@@ -519,7 +524,7 @@ class ClaimsController extends AppController {
 					'Claim.'.$report.'_uploaded NOT' => null
 				)
 			));
-			
+
 			foreach($available as $claim) {
 				$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/'.$report.'/'.$claim['Claim']['id']);			
 				$data = new SoapVar($xml,XSD_ANYXML);
