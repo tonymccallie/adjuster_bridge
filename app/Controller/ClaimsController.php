@@ -240,7 +240,7 @@ class ClaimsController extends AppController {
 		$HttpSocket = new HttpSocket();
 		
 		//$startDate = '-2 hour';
-		$startDate = '-5 days';
+		$startDate = '-2 days';
 		
 		$data = array(
 			'ACID' => '33152',
@@ -254,17 +254,13 @@ class ClaimsController extends AppController {
 		if($claimsfile->isOk()) {
 			$response = Xml::toArray(Xml::build($claimsfile->body()));
 			$claimsXml = file_get_contents($response['string']);
-$this->log(array('get_contents',$claimsXml));
 			try {
-$this->log($response['string']);
 				$claimsInfo = Xml::toArray(Xml::build($response['string']));
-$this->log('toArray',$claimsInfo);
 				if(!empty($claimsInfo['CLAIMS_PACKET']['claim']['claimID'])) {
 					$claimsInfo['CLAIMS_PACKET']['claim'] = array(
 						$claimsInfo['CLAIMS_PACKET']['claim']
 					);
 				}
-				die(debug($claimsInfo['CLAIMS_PACKET']['claim']));
 				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
 					$this->log($claim);
 					$primaryAdjuster = array();
