@@ -262,7 +262,6 @@ class ClaimsController extends AppController {
 					);
 				}
 				foreach($claimsInfo['CLAIMS_PACKET']['claim'] as $claim) {
-					$this->log($claim);
 					$primaryAdjuster = array();
 					$assignedSupervisor = array();
 					$claimsRep = array();
@@ -304,7 +303,6 @@ class ClaimsController extends AppController {
 					));
 					
 					if(!$claim_id) {
-						$this->log(array('ajax_cron: new_claim',$claim));
 						$data = array(
 							'Claim' => array(
 								'claimID' => $claim['claimID'],
