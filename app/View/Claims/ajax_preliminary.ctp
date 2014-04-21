@@ -645,8 +645,6 @@
 			<td style="width: 10%; text-align: center;">Adjuster's FCN</td>
 			<td style="width: 10%;"></td>
 		</tr>
-	</table>
-</page>
 
 <?php
 	//PICTURES
