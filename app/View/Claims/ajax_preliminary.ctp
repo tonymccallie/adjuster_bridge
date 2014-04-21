@@ -44,7 +44,7 @@
 		</tr>
 		<tr>
 			<td colspan="3" class="centered">
-				<h3>Preliminary Report</h3>
+				<h2 style="margin:0; padding:0;">Preliminary Report</h2>
 			</td>
 		</tr>
 	</table>
