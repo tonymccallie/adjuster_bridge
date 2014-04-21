@@ -647,7 +647,37 @@
 		</tr>
 	</table>
 </page>
-<?php if((!empty($claim['Claim']['pic_front_left']))||(!empty($claim['Claim']['pic_front_right']))): ?>
+
+<?php
+	//PICTURES
+	$pics = array(
+		'pic_front_right' => 'Left Front',
+		'pic_front_left' => 'Right Front',
+		'pic_rear_left' => 'Left Rear',
+		'pic_rear_right' => 'Right Rear',
+		'pic_water_inside' => 'Water Line Inside',
+		'pic_water_outside' => 'Water Line Outside',
+		'pic_optional1' => '',
+		'pic_optional2' => '',
+		'pic_optional3' => '',
+		'pic_optional4' => '',
+		'pic_optional5' => '',
+		'pic_optional6' => '',
+		'pic_optional7' => '',
+		'pic_optional8' => '',
+		'pic_optional9' => '',
+		'pic_optional10' => '',
+		'pic_optional11' => '',
+		'pic_optional12' => ''
+	);
+	$intCount = 0;
+	foreach($pics as $pic => $label):
+		if(!empty($claim['Claim'][$pic])):
+			if(file_exists('/var/www/advadj/app/webroot/uploads/'.$claim['Claim'][$pic])):
+				if(($intCount % 2)==0):
+			?>
+	</table>
+</page>		
 <page backtop="14mm">
 	<table border="1" cellspacing="0" class="page" style="width: 100%">
 		<tr>
@@ -742,668 +772,44 @@
 		</tr>
 	</table>
 	<table class="page">
-		<?php if(!empty($claim['Claim']['pic_front_left'])): ?>
+			<?php
+			endif; //header
+			$intCount++;
+	//IMAGE
+	?>
 		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_left'] ?>">
+			<td style="width: 60%; height: 370px;">
+				<img style="max-height: 100%; max-width: 100%;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim'][$pic] ?>">
 			</td>
-			<td>
-				<table>
+			<td style="width: 40%;">
+				<table style="width: 100%">
 					<tr>
-						<td>Photo #:</td>
-						<td>1</td>
+						<td style="width: 30%;">Photo #:</td>
+						<td style="width: 70%;"><?php echo $intCount ?></td>
 					</tr>
 					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
+						<td style="width: 30%;">Date</td>
+						<td style="width: 70%;"><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
 					</tr>
 					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
+						<td style="width: 30%;">Taken By:</td>
+						<td style="width: 70%;">Adjuster</td>
 					</tr>
 					<tr>
-						<td>Comment:</td>
-						<td>Left Front</td>
+						<td style="width: 30%;">Comment:</td>
+						<td style="width: 70%;">
+							<?php
+								echo !($label == '')?$label:$claim['Claim'][$pic.'_notes']
+							?>
+						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
-		<?php endif ?>
-		<?php if(!empty($claim['Claim']['pic_front_right'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_front_right'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>2</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td>Right Front</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
+	<?php
+			endif;
+		endif;
+	endforeach;
+?>
 	</table>
 </page>
-<?php endif ?>
-<?php if((!empty($claim['Claim']['pic_rear_left']))||(!empty($claim['Claim']['pic_rear_right']))): ?>
-<page backtop="14mm">
-	<table border="1" cellspacing="0" class="page" style="width: 100%">
-		<tr>
-			<td>
-				<table class="page" style="width: 100%">
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Insured:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Report:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Location:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Loss:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Policy Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Company
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Advanced Adjusting, Inc.
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Claim Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							203 SW 8th Ave, LB 14045
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Our File Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['claimFileID'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Amarillo, TX 79101
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Adjuster Name:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table class="page">
-		<?php if(!empty($claim['Claim']['pic_rear_left'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_left'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>3</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td>Left Rear</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-		<?php if(!empty($claim['Claim']['pic_rear_right'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_rear_right'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>4</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td>Right Rear</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-	</table>
-</page>
-<?php endif ?>
-<?php if((!empty($claim['Claim']['pic_water_inside']))||(!empty($claim['Claim']['pic_water_outside']))): ?>
-<page backtop="14mm">
-	<table border="1" cellspacing="0" class="page" style="width: 100%">
-		<tr>
-			<td>
-				<table class="page" style="width: 100%">
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Insured:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Report:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Location:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Loss:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Policy Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Company
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Advanced Adjusting, Inc.
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Claim Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							203 SW 8th Ave, LB 14045
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Our File Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['claimFileID'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Amarillo, TX 79101
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Adjuster Name:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table class="page">
-		<?php if(!empty($claim['Claim']['pic_water_inside'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_inside'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>5</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td>Water Line Inside</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-		<?php if(!empty($claim['Claim']['pic_water_outside'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_water_outside'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>6</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td>Water Line Outside</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-	</table>
-</page>
-<?php endif ?>
-<?php if((!empty($claim['Claim']['pic_optional1']))||(!empty($claim['Claim']['pic_optional2']))): ?>
-<page backtop="14mm">
-	<table border="1" cellspacing="0" class="page" style="width: 100%">
-		<tr>
-			<td>
-				<table class="page" style="width: 100%">
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Insured:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Report:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Location:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Loss:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Policy Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Company
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Advanced Adjusting, Inc.
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Claim Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							203 SW 8th Ave, LB 14045
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Our File Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['claimFileID'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Amarillo, TX 79101
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Adjuster Name:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table class="page">
-		<?php if(!empty($claim['Claim']['pic_optional1'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional1'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>7</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td><?php echo $claim['Claim']['pic_optional1_notes'] ?></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-		<?php if(!empty($claim['Claim']['pic_optional2'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional2'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>8</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td><?php echo $claim['Claim']['pic_optional2_notes'] ?></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-	</table>
-</page>
-<?php endif ?>
-<?php if((!empty($claim['Claim']['pic_optional3']))||(!empty($claim['Claim']['pic_optional4']))): ?>
-<page backtop="14mm">
-	<table border="1" cellspacing="0" class="page" style="width: 100%">
-		<tr>
-			<td>
-				<table class="page" style="width: 100%">
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Insured:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['last_name'].', '.$claim['Claim']['first_name'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Report:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Location:
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Date of Loss:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['city'].', '.$claim['Claim']['state'].'  '.$claim['Claim']['zip'] ?>
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Policy Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							Company
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Advanced Adjusting, Inc.
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Claim Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['policy_number'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							203 SW 8th Ave, LB 14045
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Our File Number:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['claimFileID'] ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 15%; font-weight: bold;">
-							&nbsp;
-						</td>
-						<td style="width: 40%; border-bottom: solid 1px black;">
-							Amarillo, TX 79101
-						</td>
-						<td style="width: 15%; font-weight: bold;">
-							Adjuster Name:
-						</td>
-						<td style="width: 30%; border-bottom: solid 1px black;">
-							<?php echo $claim['User']['first_name'].' '.$claim['User']['last_name'] ?>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table class="page">
-		<?php if(!empty($claim['Claim']['pic_optional3'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional3'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>9</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td><?php echo $claim['Claim']['pic_optional3_notes'] ?></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-		<?php if(!empty($claim['Claim']['pic_optional4'])): ?>
-		<tr>
-			<td>
-				<img style="height: 420px;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim']['pic_optional4'] ?>">
-			</td>
-			<td>
-				<table>
-					<tr>
-						<td>Photo #:</td>
-						<td>10</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?></td>
-					</tr>
-					<tr>
-						<td>Taken By:</td>
-						<td>Adjuster</td>
-					</tr>
-					<tr>
-						<td>Comment:</td>
-						<td><?php echo $claim['Claim']['pic_optional4_notes'] ?></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<?php endif ?>
-	</table>
-</page>
-<?php endif ?>
