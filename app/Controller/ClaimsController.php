@@ -355,6 +355,20 @@ class ClaimsController extends AppController {
 							if(!$this->Claim->save($data)) {
 								debug(array('ERROR-2',$this->Claim->validationErrors,$data));
 							}
+						} else {
+							//JSON CLEANUP
+							/*
+							$data = array(
+								'Claim' => array(
+									'id' => $claim_id['Claim']['id'],
+									'json' => json_encode($claim),
+								)
+							);
+							$this->Claim->create();
+							if(!$this->Claim->save($data)) {
+								debug(array('ERROR-2',$this->Claim->validationErrors,$data));
+							}
+							*/
 						}
 					}
 				}

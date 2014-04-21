@@ -54,7 +54,7 @@
 				Date of Loss:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+				<?php echo !is_array($json['lossDate'])?date('m/d/Y',strtotime($json['lossDate'])):'' ?>
 			</td>
 		</tr>
 		<tr>
