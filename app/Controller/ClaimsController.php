@@ -521,7 +521,7 @@ class ClaimsController extends AppController {
 
 			foreach($available as $claim) {
 				$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/'.$report.'/'.$claim['Claim']['id']);
-				$this->log(array($claim,$xml));
+
 				$data = new SoapVar($xml,XSD_ANYXML);
 				$result = $soap->UploadReport($data);
 				if(!empty($result->UploadReportResult)) {
