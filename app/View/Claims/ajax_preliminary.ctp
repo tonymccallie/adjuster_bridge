@@ -43,7 +43,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="3" class="centered">
+			<td colspan="3" style="text-align:center;" class="centered">
 				<h2 style="margin:0; padding:0;">Preliminary Report</h2>
 			</td>
 		</tr>
