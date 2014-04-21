@@ -502,7 +502,8 @@ class ClaimsController extends AppController {
 	
 	public function ajax_upload_latest() {
 		$this->layout = "ajax";
-		
+		Configure::write('debug', 2);
+	
 		$soap = new SoapClient("http://ftservices.onlinereportinginc.com/service.asmx?WSDL",array(
 			'trace'=>1,'soap_version' => SOAP_1_2,
 			'classmap'=> array(
