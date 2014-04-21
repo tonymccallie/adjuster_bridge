@@ -629,7 +629,7 @@
 			<td style="width: 10%;"></td>
 			<td style="width: 40%; border-bottom: solid 1px black; text-align: center;">
 				<?php if(!empty($claim['User']['signature'])):?>
-					<img style="width: 200px;" src="<?php echo $claim['User']['signature'] ?>">
+					<img style="width: 150px;" src="<?php echo $claim['User']['signature'] ?>">
 				<?php endif ?>
 			</td>
 			<td style="width: 10%;"></td>
