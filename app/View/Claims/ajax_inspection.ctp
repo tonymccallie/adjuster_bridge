@@ -216,19 +216,19 @@
 				<table style="width: 100%;">
 					<tr>
 						<td style="width: 20%;">
-							Interview:
+							<b>Interview:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['interview'] ?>
 						</td>
 						<td style="width: 20%;">
-							Percentage Hipp:
+							<b>Percentage Hipp:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['hipp_percentage'] ?>
 						</td>
 						<td style="width: 20%;">
-							Pool Fenced and Warnings:
+							<b>Pool Fenced and Warnings:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['pool_fenced'] ?>
@@ -236,19 +236,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Property Inspected:
+							<b>Property Inspected:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['property_inspected'] ?>
 						</td>
 						<td style="width: 20%;">
-							Color of Building:
+							<b>Color of Building:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo ($claim['Claim']['color_of_building'] != 'Other')?$claim['Claim']['color_of_building']:$claim['Claim']['color_of_building_other'] ?>
 						</td>
 						<td style="width: 20%;">
-							Hot Tub:
+							<b>Hot Tub:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['hot_tub'] ?>
@@ -256,19 +256,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Occupant:
+							<b>Occupant:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['occupant'] ?>
 						</td>
 						<td style="width: 20%;">
-							Outbuildings:
+							<b>Outbuildings:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['outbuildings'] ?>
 						</td>
 						<td style="width: 20%;">
-							Security:
+							<b>Security:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['security'] ?>
@@ -276,13 +276,13 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Summary of Condition:
+							<b>Summary of Condition:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['summary_of_condition'] ?>
 						</td>
 						<td style="width: 20%;">
-							Unattached Structure:
+							<b>Unattached Structure:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php
@@ -303,7 +303,7 @@
 							?>
 						</td>
 						<td style="width: 20%;">
-							Dogs:
+							<b>Dogs:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['dogs'] ?>
@@ -311,19 +311,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Units:
+							<b>Units:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['units'] ?>
 						</td>
 						<td style="width: 20%;">
-							Home Comparison:
+							<b>Home Comparison:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['home_comparison'] ?>
 						</td>
 						<td style="width: 20%;">
-							Other Animals:
+							<b>Other Animals:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['animals'] ?>
@@ -331,19 +331,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Location:
+							<b>Location:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['location'] ?>
 						</td>
 						<td style="width: 20%;">
-							Type of Neighborhood:
+							<b>Type of Neighborhood:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['neighborhood'] ?>
 						</td>
 						<td style="width: 20%;" rowspan="2">
-							Abandoned Vehicles, Debris, Hazards:
+							<b>Abandoned Vehicles, Debris, Hazards:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['abandoned_vehilcles'] ?>
@@ -351,13 +351,13 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Exterior Damages:
+							<b>Exterior Damages:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['ext_damages'] ?>
 						</td>
 						<td style="width: 20%;">
-							Fenced Area:
+							<b>Fenced Area:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['fenced'] ?>
@@ -368,19 +368,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Firewall:
+							<b>Firewall:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['firewall'] ?>
 						</td>
 						<td style="width: 20%;">
-							Fencing Type:
+							<b>Fencing Type:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['fencing_type'] ?>
 						</td>
 						<td style="width: 20%;">
-							Exposure Left:
+							<b>Exposure Left:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['exposure_left'] ?>
@@ -388,19 +388,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Construction Type:
+							<b>Construction Type:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['construction_type'] ?>
 						</td>
 						<td style="width: 20%;">
-							Fence Height:
+							<b>Fence Height:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['fencing_height'] ?>
 						</td>
 						<td style="width: 20%;">
-							Exposure Rear:
+							<b>Exposure Rear:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['exposure_rear'] ?>
@@ -408,19 +408,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Stories:
+							<b>Stories:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['stories'] ?>
 						</td>
 						<td style="width: 20%;">
-							Fireplace:
+							<b>Fireplace:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['fireplace'] ?>
 						</td>
 						<td style="width: 20%;">
-							Exposure Right:
+							<b>Exposure Right:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['exposure_right'] ?>
@@ -428,19 +428,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Foundation:
+							<b>Foundation:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['foundation'] ?>
 						</td>
 						<td style="width: 20%;">
-							Air Conditioning:
+							<b>Air Conditioning:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['ac'] ?>
 						</td>
 						<td style="width: 20%;">
-							Close to Water:
+							<b>Close to Water:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['close_to_water'] ?>
@@ -448,19 +448,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Condition:
+							<b>Condition:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['condition'] ?>
 						</td>
 						<td style="width: 20%;">
-							Patio:
+							<b>Patio:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['patio'] ?>
 						</td>
 						<td style="width: 20%;">
-							Fire Department:
+							<b>Fire Department:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['fire_department'] ?>
@@ -468,19 +468,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Age:
+							<b>Age:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['age'] ?>
 						</td>
 						<td style="width: 20%;">
-							Porch:
+							<b>Porch:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['porch'] ?>
 						</td>
 						<td style="width: 20%;">
-							Hydrant Access:
+							<b>Hydrant Access:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['hydrant_access'] ?>
@@ -488,19 +488,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Roof Type:
+							<b>Roof Type:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['roof_type'] ?>
 						</td>
 						<td style="width: 20%;">
-							Porch Enclosure:
+							<b>Porch Enclosure:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['porch_enclosure'] ?>
 						</td>
 						<td style="width: 20%;">
-							Hydrant Access Distance:
+							<b>Hydrant Access Distance:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['hydrant_proximity'] ?>
@@ -508,19 +508,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Roof Condition:
+							<b>Roof Condition:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['roof_condition'] ?>
 						</td>
 						<td style="width: 20%;">
-							Deck/Balcony:
+							<b>Deck/Balcony:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['deck'] ?>
 						</td>
 						<td style="width: 20%;">
-							Subdivision Security:
+							<b>Subdivision Security:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['subdivision_security'] ?>
@@ -528,19 +528,19 @@
 					</tr>
 					<tr>
 						<td style="width: 20%;">
-							Hipp Roof:
+							<b>Hipp Roof:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['hipp'] ?>
 						</td>
 						<td style="width: 20%;">
-							Pool Type:
+							<b>Pool Type:</b>
 						</td>
 						<td style="width: 13%;">
 							<?php echo $claim['Claim']['pool_type'] ?>
 						</td>
 						<td style="width: 20%;">
-							Within City Limits:
+							<b>Within City Limits:</b>
 						</td>
 						<td style="width: 14%;">
 							<?php echo $claim['Claim']['city_limits'] ?>
