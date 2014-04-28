@@ -74,7 +74,7 @@
 				Date of Loss:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo date('m/d/Y',strtotime($json['lossDate'])) ?>
+				<?php echo !is_array($json['lossDate'])?date('m/d/Y',strtotime($json['lossDate'])):'' ?>
 			</td>
 		</tr>
 		<tr>
@@ -183,7 +183,7 @@
 								</tr>
 								<tr>
 									<td colspan="5">
-										Term: <span style="text-decoration: underline;"> <?php echo date('m/d/Y',strtotime($json['CLAIM_CONTACTS']['Contact'][0]['policyStart'])) ?> </span> to <span style="text-decoration: underline;"> <?php echo date('m/d/Y',strtotime($json['CLAIM_CONTACTS']['Contact'][0]['policyEnd'])) ?> </span>
+										Term: <span style="text-decoration: underline;"> <?php echo !empty($json['CLAIM_CONTACTS']['Contact'][0]['policyStart'])?date('m/d/Y',strtotime($json['CLAIM_CONTACTS']['Contact'][0]['policyStart'])):'Undefined' ?> </span> to <span style="text-decoration: underline;"> <?php echo !empty($json['CLAIM_CONTACTS']['Contact'][0]['policyEnd'])?date('m/d/Y',strtotime($json['CLAIM_CONTACTS']['Contact'][0]['policyEnd'])):'Undefined' ?> </span>
 									</td>
 								</tr>
 							</table>
@@ -700,7 +700,7 @@
 							Location:
 						</td>
 						<td style="width: 40%; border-bottom: solid 1px black;">
-							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'' ?>
+							<?php echo $claim['Claim']['address1']?><?php echo !empty($claim['Claim']['address2'])?', '.$claim['Claim']['address2']:'Undefined' ?>
 						</td>
 						<td style="width: 15%; font-weight: bold;">
 							Date of Loss:
