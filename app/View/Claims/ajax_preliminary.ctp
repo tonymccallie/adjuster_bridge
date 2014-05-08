@@ -776,9 +776,9 @@
 	//IMAGE
 	$imageSize = getimagesize('/var/www/advadj/app/webroot/uploads/'.$claim['Claim'][$pic]);
 	if($imageSize[0] > $imageSize[1]) {
-		$imageStyle = 'width: 100%;';
+		$imageStyle = 'width: 430px;';
 	} else {
-		$imageStyle = 'height: 100%;';
+		$imageStyle = 'height: 320px;';
 	}
 	?>
 		<tr>
