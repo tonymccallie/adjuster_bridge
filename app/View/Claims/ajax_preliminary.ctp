@@ -774,6 +774,12 @@
 			endif; //header
 			$intCount++;
 	//IMAGE
+	$imageSize = getimagesize('/var/www/advadj/app/webroot/uploads/'.$claim['Claim'][$pic]);
+	if($imageSize[0] > $imageSize[1]) {
+		$imageStyle = 'width: 100%;';
+	} else {
+		$imageStyle = 'height: 100%;';
+	}
 	?>
 		<tr>
 			<td style="width: 60%; height: 370px;">
