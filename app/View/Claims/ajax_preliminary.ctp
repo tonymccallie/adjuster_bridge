@@ -776,14 +776,14 @@
 	//IMAGE
 	$imageSize = getimagesize('/var/www/advadj/app/webroot/uploads/'.$claim['Claim'][$pic]);
 	if($imageSize[0] > $imageSize[1]) {
-		$imageStyle = 'width: 430px;';
+		$imageStyle = 'width: 100%;';
 	} else {
-		$imageStyle = 'height: 320px;';
+		$imageStyle = 'height: 100%;';
 	}
 	?>
 		<tr>
 			<td style="width: 60%; height: 370px;">
-				<img style="max-height: 100%; width: 100%;" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim'][$pic] ?>">
+				<img style="<?php echo $imageStyle ?>" src="http://advadj.greyback.net/uploads/<?php echo $claim['Claim'][$pic] ?>">
 			</td>
 			<td style="width: 40%;">
 				<table style="width: 100%">
