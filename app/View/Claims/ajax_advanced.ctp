@@ -7,7 +7,7 @@
 <style type="text/css" media="screen">
 <!--
 	body {
-		font-size: 14px;
+		font-size: 12px;
 		font-family: arial;
 	}
 	h5 {
@@ -17,7 +17,7 @@
 	
 	table {
 		width: 100%;
-		font-size: 14px;
+		font-size: 12px;
 	}
 	
 	table.page {
