@@ -161,10 +161,10 @@
 					</tr>
 					<tr>
 						<td style="width: 10%; font-weight: bold;">
-							Carrier Name:
+							Survey Date:
 						</td>
 						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo $claimsRep['companyName'] ?>
+							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
 						</td>
 						<td style="width: 10%; font-weight: bold;">
 							Insured:
@@ -237,17 +237,6 @@
 						</td>
 						<td style="width: 24%; border-bottom: solid 1px black;">
 							Unknown
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 10%; font-weight: bold;">
-							Survey Date:
-						</td>
-						<td style="width: 23%; border-bottom: solid 1px black;">
-							<?php echo date('m/d/Y',strtotime($claim['Claim']['report_date'])) ?>
-						</td>
-						<td colspan="4" style="width: 64%; font-weight: bold;">
-							&nbsp;
 						</td>
 					</tr>
 				</table>
