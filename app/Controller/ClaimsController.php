@@ -9,6 +9,7 @@ class ClaimsController extends AppController {
 		);
 
 		if(!empty($this->request->data['User']['id'])) {
+		
 			$claims = $this->Claim->find('all',array(
 				'conditions' => array(
 					'Claim.user_id' => $this->request->data['User']['id'],
@@ -16,6 +17,11 @@ class ClaimsController extends AppController {
 				),
 				'contain' => array()
 			));	
+			
+			foreach($claims as $k => $claim) {
+				unset($claims[$k]['Claim']['json']);
+			}
+			
 			$message = array(
 				'status' => 'SUCCESS',
 				'data' => $claims
@@ -24,7 +30,7 @@ class ClaimsController extends AppController {
 		
 		if($claims) {
 			$read = array();
-			foreach($claims as $claim) {
+			foreach($claims as $k => $claim) {
 				array_push($read, array(
 					'id' => $claim['Claim']['id'],
 					'status' => 'READ'
@@ -302,6 +308,10 @@ class ClaimsController extends AppController {
 						'contain' => array()
 					));
 					
+					if(is_array($claim['claimDateDue'])) {
+						$claim['claimDateDue'] = '';
+					}
+					
 					if(!$claim_id) {
 						$data = array(
 							'Claim' => array(
@@ -369,6 +379,7 @@ class ClaimsController extends AppController {
 								debug(array('ERROR-2',$this->Claim->validationErrors,$data));
 							}
 							*/
+							
 						}
 					}
 				}
@@ -483,7 +494,7 @@ class ClaimsController extends AppController {
 				break;
 			
 		}
-		$this->set(compact('filename','file','claim','title'));
+		$this->set(compact('filename','file','claim','title','report'));
 	}
 
 	public function ajax_preliminary($claim_id = null) {

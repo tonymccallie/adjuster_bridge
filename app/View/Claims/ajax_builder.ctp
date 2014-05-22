@@ -13,7 +13,7 @@
 		<ClaimFileID><?php echo $claim['Claim']['claimFileID'] ?></ClaimFileID>
 		<ReportFileName><?php echo $filename ?></ReportFileName>
 		<ReportTitle><?php echo $title ?></ReportTitle>
-		<ReportDescription>Preliminary Report uploaded from the AdvAdj App.</ReportDescription>
+		<ReportDescription><?php echo $title ?> uploaded from the AdvAdj App.</ReportDescription>
 		<PrintedFlag>1</PrintedFlag>
 	</oReport>
 </UploadReport>
