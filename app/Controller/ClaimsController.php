@@ -579,9 +579,9 @@ class ClaimsController extends AppController {
 					Common::email(array(
 						'to' => 'tony@threeleaf.net',
 						'subject' => 'WARNING: '.$report.' upload issue',
-						'template' => 'default',
+						'template' => 'error',
 						'variables' => array(
-							'content' => 'There was a problem uploading the report '.$claim['Claim']['claimFileID'].'<br/>'.Common::currentUrl().'ajax/claims/'.$report.'/'.$claim['Claim']['id']
+							'error' => 'There was a problem uploading the report '.$claim['Claim']['claimFileID'].'<br/>'.Common::currentUrl().'ajax/claims/'.$report.'/'.$claim['Claim']['id']
 						)
 					),'');
 				}
