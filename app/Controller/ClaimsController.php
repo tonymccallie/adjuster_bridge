@@ -535,10 +535,8 @@ class ClaimsController extends AppController {
 				'UploadReport' => 'UploadReport'
 			)
 		));
-		$this->log($soap);
 		
 		foreach(array('preliminary','advanced','engineer','inspection') as $report) {
-			$this->log($report);
 			$available = $this->Claim->find('all',array(
 				'conditions' => array(
 					'Claim.'.$report.'_uploaded NOT' => null
@@ -547,11 +545,9 @@ class ClaimsController extends AppController {
 			
 			foreach($available as $claim) {
 				$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/'.$report.'/'.$claim['Claim']['id']);
-				$this->log('got xml for'.$claim['Claim']['claimFileID']);
 				$data = new SoapVar($xml,XSD_ANYXML);
 				$result = $soap->UploadReport($data);
 				if(!empty($result->UploadReportResult)) {
-					$this->log($result->UploadReportResult);
 					$filetrac = $result->UploadReportResult;
 					if(!empty($claim['Claim']['email'])) {
 						$email = $claim['Claim']['email'];
@@ -579,7 +575,15 @@ class ClaimsController extends AppController {
 					$this->Claim->create();
 					$this->Claim->save($data);
 				} else {
-					$this->log($result);
+					$this->log(array($result,$claim));
+					Common::email(array(
+						'to' => 'tony@threeleaf.net',
+						'subject' => 'WARNING: '.$report.' upload issue',
+						'template' => 'default',
+						'variables' => array(
+							'content' => 'There was a problem uploading the report '.$claim['Claim']['claimFileID'].'<br/>'.Common::currentUrl().'ajax/claims/'.$report.'/'.$claim['Claim']['id']
+						)
+					),'');
 				}
 			}
 			
