@@ -4,8 +4,8 @@
 ?>
 <UploadReport xmlns="http://filetrac.onlinereportinginc.com/ftservices/">
 	<oReport>
-		<Login>mikemorgan</Login>
-		<Password>rincon1$</Password>
+		<Login>threeleaf</Login>
+		<Password>Bob13013!</Password>
 		<CompanyKey>ORI</CompanyKey>
 		<ReportFile><?php echo $file ?></ReportFile>
 		<UserID><?php echo $claim['User']['userID'] ?></UserID>
