@@ -207,7 +207,7 @@ class ClaimsController extends AppController {
 		$xml = '<GetClaimData xmlns="http://filetrac.onlinereportinginc.com/ftservices/">'.
 					'<oParms>'.
 						'<Login>mikemorgan</Login>'.
-						'<Password>rincon1$</Password>'.
+						'<Password>Bob13013!</Password>'.
 						'<CompanyKey>ORI</CompanyKey><UserID>205079</UserID>'.
 						'<ClaimID>'.$claims[0]['Claim']['claimID'].'</ClaimID>'.
 					'</oParms>'.
