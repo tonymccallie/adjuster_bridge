@@ -55,7 +55,7 @@ class ClaimsController extends AppController {
 		
 		$json = json_decode($this->request->data['json'],true);
 		
-		$this->log(array('app_upload',$message));
+		//$this->log(array('app_upload',$message));
 
 		$data = array(
 			'Claim' => $json['data']
@@ -131,7 +131,7 @@ class ClaimsController extends AppController {
 			'message' => 'No information passed'
 		);
 		
-		$this->log(array('app_image_upload',$this->request->params['form']));
+		//$this->log(array('app_image_upload',$this->request->params['form']));
 		
 		$tempFile = $this->request->params['form']['image']['tmp_name'];
 		move_uploaded_file($tempFile,APP . 'webroot/uploads/'.$this->request->params['form']['image']['name']);
@@ -537,19 +537,20 @@ class ClaimsController extends AppController {
 		));
 		
 		foreach(array('preliminary','advanced','engineer','inspection') as $report) {
-		
+			$this->log($report);
 			$available = $this->Claim->find('all',array(
 				'conditions' => array(
 					'Claim.'.$report.'_uploaded NOT' => null
 				)
 			));
-
+			
 			foreach($available as $claim) {
 				$xml = file_get_contents(Common::currentUrl().'ajax/claims/builder/'.$report.'/'.$claim['Claim']['id']);
-
+				$this->log('got xml for'.$claim['Claim']['claimFileID']);
 				$data = new SoapVar($xml,XSD_ANYXML);
 				$result = $soap->UploadReport($data);
 				if(!empty($result->UploadReportResult)) {
+					$this->log($result->UploadReportResult);
 					$filetrac = $result->UploadReportResult;
 					if(!empty($claim['Claim']['email'])) {
 						$email = $claim['Claim']['email'];
@@ -576,6 +577,8 @@ class ClaimsController extends AppController {
 					);
 					$this->Claim->create();
 					$this->Claim->save($data);
+				} else {
+					$this->log($result);
 				}
 			}
 			
