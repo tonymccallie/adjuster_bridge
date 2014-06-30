@@ -535,6 +535,7 @@ class ClaimsController extends AppController {
 				'UploadReport' => 'UploadReport'
 			)
 		));
+		$this->log($soap);
 		
 		foreach(array('preliminary','advanced','engineer','inspection') as $report) {
 			$this->log($report);
