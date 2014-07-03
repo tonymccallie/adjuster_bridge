@@ -88,7 +88,7 @@
 				Catastrophe No.:
 			</td>
 			<td style="width: 30%; border-bottom: solid 1px black;">
-				<?php echo $json['claimCAT'] ?>
+				<?php echo $claim['Claim']['fico'] ?>
 			</td>
 		</tr>
 		<tr>
