@@ -106,7 +106,7 @@ class ClaimsController extends AppController {
 		
 		unset($data['Claim']['claimFileID']);
 		
-		//$this->log($data);
+		$this->log($data);
 		if($this->Claim->save($data)) {
 			$message = array(
 				'status' => 'SUCCESS',
