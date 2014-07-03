@@ -83,6 +83,8 @@ class ClaimsController extends AppController {
 				$filename = $data['Claim']['id'].$signature.'.png';
 				file_put_contents(APP . 'webroot/uploads/'.$filename, base64_decode(str_replace('data:image/png;base64,', '', $data['Claim'][$signature])));
 				$data['Claim'][$signature] = $filename;
+			} else {
+				unset($data['Claim'][$signature]);
 			}
 		}
 		
@@ -106,13 +108,13 @@ class ClaimsController extends AppController {
 		
 		unset($data['Claim']['claimFileID']);
 		
-		$this->log($data);
 		if($this->Claim->save($data)) {
 			$message = array(
 				'status' => 'SUCCESS',
 				'data' => $data
 			);
 		} else {
+			$this->log(array($data,$this->Claim));
 			$message['message'] = 'There was an error saving the data';
 		}
 		
