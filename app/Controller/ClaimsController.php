@@ -148,7 +148,7 @@ class ClaimsController extends AppController {
 		
 		$this->Claim->create();
 		if($this->Claim->save($data)) {
-			$this->log('image_upload');
+			$this->log($data);
 			$message['status'] = 'SUCCESS';
 		}
 		
