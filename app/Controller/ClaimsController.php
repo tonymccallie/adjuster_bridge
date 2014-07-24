@@ -108,8 +108,8 @@ class ClaimsController extends AppController {
 		
 		unset($data['Claim']['claimFileID']);
 		
-		$this->log(array($data['Claim']['id'],$data['Claim']['water_feet']));
 		if($this->Claim->save($data)) {
+			$this->log(array($data['Claim']['id'],$data['Claim']['water_feet']));
 			$message = array(
 				'status' => 'SUCCESS',
 				'data' => $data
@@ -148,6 +148,7 @@ class ClaimsController extends AppController {
 		
 		$this->Claim->create();
 		if($this->Claim->save($data)) {
+			$this->log('image_upload');
 			$message['status'] = 'SUCCESS';
 		}
 		
