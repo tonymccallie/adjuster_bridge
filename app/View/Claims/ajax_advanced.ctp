@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<td class="centered" >
-				<h2>Flood Advanced Payment Request</h2>
+				<h2>Flood Advance Payment Request</h2>
 			</td>
 		</tr>
 	</table>

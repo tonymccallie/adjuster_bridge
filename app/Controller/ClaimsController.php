@@ -54,8 +54,6 @@ class ClaimsController extends AppController {
 		);
 		
 		$json = json_decode($this->request->data['json'],true);
-		
-		//$this->log(array('app_upload',$message));
 
 		$data = array(
 			'Claim' => $json['data']
@@ -109,7 +107,6 @@ class ClaimsController extends AppController {
 		unset($data['Claim']['claimFileID']);
 		
 		if($this->Claim->save($data)) {
-			$this->log(array($data['Claim']['id'],$data['Claim']['water_feet']));
 			$message = array(
 				'status' => 'SUCCESS',
 				'data' => $data
@@ -133,8 +130,6 @@ class ClaimsController extends AppController {
 			'data' => $this->request->data,
 			'message' => 'No information passed'
 		);
-		
-		//$this->log(array('app_image_upload',$this->request->params['form']));
 		
 		$tempFile = $this->request->params['form']['image']['tmp_name'];
 		move_uploaded_file($tempFile,APP . 'webroot/uploads/'.$this->request->params['form']['image']['name']);
@@ -337,7 +332,9 @@ class ClaimsController extends AppController {
 								'user_id' => $user,
 								'json' => json_encode($claim),
 								'status' => 'NEW',
-								'email' => $assignedSupervisor['supervisorEMail']
+								'email' => $assignedSupervisor['supervisorEMail'],
+								'content_coverage' => $claim['claimCoverageA'],
+								'building_coverage' => $claim['claimCoverageB'],
 							),
 							'User' => array(
 								'id' => $user,
