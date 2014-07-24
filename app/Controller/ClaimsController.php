@@ -146,14 +146,10 @@ class ClaimsController extends AppController {
 			)
 		);
 		
-		$this->Claim->create();
-		/*
-if($this->Claim->save($data)) {
-			$this->log($data);
+		//$this->Claim->create();
+		if($this->Claim->save($data)) {
 			$message['status'] = 'SUCCESS';
 		}
-*/	
-		$message['status'] = 'SUCCESS';
 		
 		$this->set(array(
 			'message' => $message,
