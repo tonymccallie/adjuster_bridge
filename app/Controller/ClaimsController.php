@@ -311,6 +311,12 @@ class ClaimsController extends AppController {
 					}
 					
 					if(!$claim_id) {
+						if(is_array($claim['claimCoverageA'])) {
+							$claim['claimCoverageA'] = 0;
+						}
+						if(is_array($claim['claimCoverageB'])) {
+							$claim['claimCoverageB'] = 0;
+						}
 						$data = array(
 							'Claim' => array(
 								'claimID' => $claim['claimID'],
