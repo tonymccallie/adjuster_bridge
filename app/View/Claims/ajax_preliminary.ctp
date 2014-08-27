@@ -447,7 +447,7 @@
 							<table style="">
 								<tr>
 									<td>Exterior wall structure:</td>
-									<?php foreach(array("Reinf. concrete","Concrete block","Wood stud") as $option): ?>
+									<?php foreach(array("Reinf. concrete","Concrete block","Wood Stud") as $option): ?>
 										<td><?php echo ($claim['Claim']['exterior_wall_structure'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
 									<?php endforeach ?>
 								</tr>
