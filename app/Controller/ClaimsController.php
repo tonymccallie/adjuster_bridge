@@ -339,8 +339,8 @@ class ClaimsController extends AppController {
 								'json' => json_encode($claim),
 								'status' => 'NEW',
 								'email' => $assignedSupervisor['supervisorEMail'],
-								'content_coverage' => $claim['claimCoverageA'],
-								'building_coverage' => $claim['claimCoverageB'],
+								'content_coverage' => $claim['claimCoverageB'],
+								'building_coverage' => $claim['claimCoverageA'],
 							),
 							'User' => array(
 								'id' => $user,
