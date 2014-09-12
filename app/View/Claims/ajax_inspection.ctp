@@ -681,7 +681,7 @@
 		'pic_optional17' => '',
 		'pic_optional18' => '',
 		'pic_optional19' => '',
-		'pic_optional10' => '',
+		'pic_optional20' => '',
 	);
 	$intCount = 0;
 	foreach($pics as $pic => $label):
