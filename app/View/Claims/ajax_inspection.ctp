@@ -215,6 +215,11 @@
 			<td style="width: 100%;">
 				<table style="width: 100%;">
 					<tr>
+						<td colspan="6">
+							<h3>Exterior</h3>
+						</td>
+					</tr>
+					<tr>
 						<td style="width: 20%;">
 							<b>Interview:</b>
 						</td>
@@ -546,6 +551,55 @@
 							<?php echo $claim['Claim']['city_limits'] ?>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="6">
+							<h3>Interior</h3>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 20%;">
+							<b>Evidence of Knob &amp; Tube wiring?:</b>
+						</td>
+						<td style="width: 13%;">
+							<?php echo $claim['Claim']['knob'] ?>
+						</td>
+						<td style="width: 20%;">
+							<b>Is the Knob &amp; Tube wiring active?</b>
+						</td>
+						<td style="width: 13%;">
+							<?php echo $claim['Claim']['knob_active'] ?>
+						</td>
+						<td style="width: 20%;">
+							<b>Copper or aluminum wiring?:</b>
+						</td>
+						<td style="width: 14%;">
+							<?php echo $claim['Claim']['wiring'] ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 20%;">
+							<b>100 Amp or larger electrical source?:</b>
+						</td>
+						<td style="width: 13%;">
+							<?php echo $claim['Claim']['electrical_source'] ?>
+						</td>
+						<td style="width: 20%;">
+							<b>Supplemental heat source:</b>
+						</td>
+						<td style="width: 47%;" colspan="3">
+							<table>
+								<tr>
+									<?php foreach(array('No','Solid','Other') as $option): ?>
+										<?php if($option != 'Other'): ?>
+											<td><?php echo ($claim['Claim']['supplemental_heat'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;&nbsp;</td>
+										<?php else: ?>
+											<td><?php echo ($claim['Claim']['supplemental_heat'] == $option)?$marked:$unmarked ?> <?php echo $option ?>&nbsp;:&nbsp;<span style="border-bottom:solid 1px black;">&nbsp;&nbsp;<?php echo $claim['Claim']['supplemental_heat_other'] ?>&nbsp;&nbsp;</span></td>
+										<?php endif ?>
+									<?php endforeach ?>
+								</tr>
+							</table>
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
@@ -553,11 +607,23 @@
 	<table class="page">
 		<tr>
 			<td class="width: 100%">
-				<h4>Recommendations:</h4>
+				<h4>Exterior Recommendations:</h4>
 				<table border="1" cellspacing="0" class="page" style="width: 100%">
 					<tr>
 						<td style="width: 100%;">
 							<?php echo $claim['Claim']['observations'] ?>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="width: 100%">
+				<h4>Interior Recommendations:</h4>
+				<table border="1" cellspacing="0" class="page" style="width: 100%">
+					<tr>
+						<td style="width: 100%;">
+							<?php echo $claim['Claim']['interior_observations'] ?>
 						</td>
 					</tr>
 				</table>
@@ -607,7 +673,15 @@
 		'pic_optional9' => '',
 		'pic_optional10' => '',
 		'pic_optional11' => '',
-		'pic_optional12' => ''
+		'pic_optional12' => '',
+		'pic_optional13' => '',
+		'pic_optional14' => '',
+		'pic_optional15' => '',
+		'pic_optional16' => '',
+		'pic_optional17' => '',
+		'pic_optional18' => '',
+		'pic_optional19' => '',
+		'pic_optional10' => '',
 	);
 	$intCount = 0;
 	foreach($pics as $pic => $label):

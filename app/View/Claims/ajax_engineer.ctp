@@ -124,7 +124,15 @@
 		'pic_optional9' => '',
 		'pic_optional10' => '',
 		'pic_optional11' => '',
-		'pic_optional12' => ''
+		'pic_optional12' => '',
+		'pic_optional13' => '',
+		'pic_optional14' => '',
+		'pic_optional15' => '',
+		'pic_optional16' => '',
+		'pic_optional17' => '',
+		'pic_optional18' => '',
+		'pic_optional19' => '',
+		'pic_optional10' => '',
 	);
 	$intCount = 0;
 	foreach($pics as $pic => $label):
