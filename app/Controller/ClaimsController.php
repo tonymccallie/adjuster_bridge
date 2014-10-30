@@ -246,7 +246,7 @@ class ClaimsController extends AppController {
 		$HttpSocket = new HttpSocket();
 		
 		//$startDate = '-2 hour';
-		$startDate = '-7 days';
+		$startDate = '-20 days';
 		
 		$data = array(
 			'ACID' => '33152',
